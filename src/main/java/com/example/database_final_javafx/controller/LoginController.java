@@ -35,7 +35,7 @@ public class LoginController {
     private final String userUsername = "user";
     private final String userPassword = "user123";
 
-        public LoginController(Connection connection) {
+    public LoginController(Connection connection) {
         this.userDAO = new UserDAO(connection);
     }
 
@@ -49,12 +49,12 @@ public class LoginController {
             return;
         }
 
-        if (username.equals(adminUsername) && password.equals(adminPassword)) {
-            showAlert(Alert.AlertType.INFORMATION, "Login Successful", "Welcome Admin!");
-//            navigateToView("admin-dashboard.fxml");
-        } else if (username.equals(userUsername) && password.equals(userPassword)) {
-            showAlert(Alert.AlertType.INFORMATION, "Login Successful", "Welcome User!");
-//            navigateToView("user-dashboard.fxml");
+
+        User user = userDAO.findByUsernameAndPassword(username, password);
+        System.out.println("test");
+
+        if (user != null) {
+            showAlert(Alert.AlertType.INFORMATION, "Login Successful", "Welcome, " + user.getEmail() + "!");
         } else {
             showAlert(Alert.AlertType.ERROR, "Login Failed", "Invalid credentials. Please try again.");
         }

@@ -34,7 +34,7 @@ public class CreateTables {
             """;
 
         String createUserTableSQL = """
-            CREATE TABLE IF NOT EXISTS "user" (
+            CREATE TABLE IF NOT EXISTS "users" (
                 id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
                 name VARCHAR(255) NOT NULL,
                 email VARCHAR(255) NOT NULL UNIQUE,
@@ -80,7 +80,7 @@ public class CreateTables {
                 """;
 
         String insertUsersSQL = """
-                INSERT INTO "user" (name, email, password, account_type) VALUES
+                INSERT INTO "users" (name, email, password, account_type) VALUES
                     ('Admin User', 'admin@example.com', 'adminpass', 'ADMIN'),
                     ('John Doe', 'john@example.com', 'johnpass', 'USER'),
                     ('Jane Smith', 'jane@example.com', 'janepass', 'USER'),

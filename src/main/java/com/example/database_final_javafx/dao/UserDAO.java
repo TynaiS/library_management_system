@@ -15,24 +15,27 @@ public class UserDAO extends GenericDao<User> {
         super(connection);
     }
 
-    protected User findByUsernameAndPassword(String email, String password) {
+    public User findByUsernameAndPassword(String email, String password) {
         String sql = "SELECT * FROM " + getTableName() + " WHERE email = ? AND password = ?";
+        System.out.println("preparing query");
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, email);
             stmt.setString(2, password);
             ResultSet rs = stmt.executeQuery();
+            System.out.println("executing query");
             if (rs.next()) {
                 return mapResultSetToEntity(rs);
             }
             return null;
         } catch (SQLException e) {
+            e.printStackTrace();
             return null;
         }
     }
 
     @Override
     protected String getTableName() {
-        return "user";
+        return "users";
     }
 
     @Override
@@ -57,6 +60,7 @@ public class UserDAO extends GenericDao<User> {
 
     @Override
     protected User mapResultSetToEntity(ResultSet rs) throws SQLException {
+        System.out.println(rs);
         long id = rs.getLong("id");
         String name = rs.getString("name");
         String email = rs.getString("email");

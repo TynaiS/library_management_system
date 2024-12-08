@@ -31,12 +31,20 @@ public class MainApplication extends Application {
             return; // If connection fails, return early and don't proceed
         }
 
-        Map<Class<?>, Supplier<Object>> controllerFactories = new HashMap<>();
-        controllerFactories.put(AuthorController.class, () -> new AuthorController(connection));
-        controllerFactories.put(LoginController.class, () -> new LoginController(connection));
+//        Map<Class<?>, Supplier<Object>> controllerFactories = new HashMap<>();
+//        controllerFactories.put(AuthorController.class, () -> new AuthorController(connection));
+//        controllerFactories.put(LoginController.class, () -> new LoginController(connection));
 
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("login.fxml"));
-        fxmlLoader.setControllerFactory(controllerFactories::get);
+//        fxmlLoader.setControllerFactory(controllerFactories::get);
+        fxmlLoader.setControllerFactory(type -> {
+            if(type == AuthorController.class) {
+                return new AuthorController(connection);
+            } else if (type == LoginController.class) {
+                return new LoginController(connection);
+            }
+            return null;
+        });
 
         Pane root = fxmlLoader.load();
         Scene scene = new Scene(root);
