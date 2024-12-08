@@ -1,4 +1,67 @@
 package com.example.database_final_javafx.dao;
 
-public class UserDAO {
+import com.example.database_final_javafx.entity.Book;
+import com.example.database_final_javafx.entity.User;
+import com.example.database_final_javafx.utils.AccountType;
+import com.example.database_final_javafx.utils.GenericDao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class UserDAO extends GenericDao<User> {
+    public UserDAO(Connection connection) {
+        super(connection);
+    }
+
+    protected User findByUsernameAndPassword(String email, String password) {
+        String sql = "SELECT * FROM " + getTableName() + " WHERE email = ? AND password = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, email);
+            stmt.setString(2, password);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return mapResultSetToEntity(rs);
+            }
+            return null;
+        } catch (SQLException e) {
+            return null;
+        }
+    }
+
+    @Override
+    protected String getTableName() {
+        return "user";
+    }
+
+    @Override
+    protected String generateInsertSQL(User user) {
+        return "insert into user () values ()";
+    }
+
+    @Override
+    protected String generateUpdateSQL(User user) {
+        return "update user set where";
+    }
+
+    @Override
+    protected void setInsertParameters(PreparedStatement stmt, User entity) throws SQLException {
+
+    }
+
+    @Override
+    protected void setUpdateParameters(PreparedStatement stmt, User entity) throws SQLException {
+
+    }
+
+    @Override
+    protected User mapResultSetToEntity(ResultSet rs) throws SQLException {
+        long id = rs.getLong("id");
+        String name = rs.getString("name");
+        String email = rs.getString("email");
+        String password = rs.getString("password");
+        AccountType accountType = AccountType.valueOf(rs.getString("account_type"));
+        return new User(id, name, email, password, accountType);
+    }
 }
