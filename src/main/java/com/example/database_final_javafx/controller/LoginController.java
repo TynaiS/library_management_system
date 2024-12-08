@@ -2,6 +2,7 @@ package com.example.database_final_javafx.controller;
 
 import com.example.database_final_javafx.dao.UserDAO;
 import com.example.database_final_javafx.entity.User;
+import com.example.database_final_javafx.utils.UserSession;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -53,7 +54,10 @@ public class LoginController {
         User user = userDAO.findByUsernameAndPassword(username, password);
         System.out.println("test");
 
+
+
         if (user != null) {
+            UserSession.setUser(user);
             showAlert(Alert.AlertType.INFORMATION, "Login Successful", "Welcome, " + user.getEmail() + "!");
         } else {
             showAlert(Alert.AlertType.ERROR, "Login Failed", "Invalid credentials. Please try again.");
