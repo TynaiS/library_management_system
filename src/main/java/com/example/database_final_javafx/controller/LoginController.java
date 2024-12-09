@@ -1,5 +1,6 @@
 package com.example.database_final_javafx.controller;
 
+import com.example.database_final_javafx.MainApplication;
 import com.example.database_final_javafx.dao.UserDAO;
 import com.example.database_final_javafx.entity.User;
 import com.example.database_final_javafx.utils.UserSession;
@@ -11,11 +12,13 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.sql.Connection;
 
 public class LoginController {
 
     private UserDAO userDAO;
+    private MainApplication mainApplication;
 
     @FXML
     private TextField usernameField;
@@ -36,12 +39,13 @@ public class LoginController {
     private final String userUsername = "user";
     private final String userPassword = "user123";
 
-    public LoginController(Connection connection) {
+    public LoginController(Connection connection, MainApplication mainApplication) {
         this.userDAO = new UserDAO(connection);
+        this.mainApplication = mainApplication;
     }
 
     @FXML
-    private void handleLogin(ActionEvent event) {
+    private void handleLogin(ActionEvent event) throws IOException {
         String username = usernameField.getText();
         String password = passwordField.getText();
 
@@ -58,7 +62,7 @@ public class LoginController {
 
         if (user != null) {
             UserSession.setUser(user);
-            showAlert(Alert.AlertType.INFORMATION, "Login Successful", "Welcome, " + user.getEmail() + "!");
+            mainApplication.showBookListPage();
         } else {
             showAlert(Alert.AlertType.ERROR, "Login Failed", "Invalid credentials. Please try again.");
         }
