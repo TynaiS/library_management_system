@@ -31,14 +31,6 @@ public class LoginController {
 
     @FXML
     private Button registerButton;
-
-
-    // Sample credentials for demonstration purposes
-    private final String adminUsername = "admin";
-    private final String adminPassword = "admin123";
-    private final String userUsername = "user";
-    private final String userPassword = "user123";
-
     public LoginController(Connection connection, MainApplication mainApplication) {
         this.userDAO = new UserDAO(connection);
         this.mainApplication = mainApplication;

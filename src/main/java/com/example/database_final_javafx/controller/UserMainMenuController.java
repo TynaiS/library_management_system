@@ -2,8 +2,10 @@ package com.example.database_final_javafx.controller;
 import com.example.database_final_javafx.MainApplication;
 import com.example.database_final_javafx.dao.AuthorDAO;
 import com.example.database_final_javafx.dao.BookDAO;
+import com.example.database_final_javafx.dao.OrderDAO;
 import com.example.database_final_javafx.entity.Author;
 import com.example.database_final_javafx.entity.Book;
+import com.example.database_final_javafx.utils.UserSession;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -27,17 +29,21 @@ public class UserMainMenuController implements Initializable {
     private BookDAO bookDAO;
     private AuthorDAO authorDAO;
 
+    private OrderDAO orderDAO;
+
     @FXML
     private GridPane bookGrid;
 
     public UserMainMenuController(Connection connection) {
         this.bookDAO = new BookDAO(connection);
         this.authorDAO = new AuthorDAO(connection);
+        this.orderDAO = new OrderDAO(connection);
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         List<Book> books = loadBooks();
+        List<Long> booksIDsOwnedByUser = loadBooksOwnedByUser();
 
         int column = 0;
         int row = 1;
@@ -55,14 +61,23 @@ public class UserMainMenuController implements Initializable {
 
                 AnchorPane anchorPane = fxmlLoader.load();
 
+                boolean isBookOwned = false;
+
+                if (booksIDsOwnedByUser.contains( books.get(i).getId()) ) {
+                    isBookOwned = true;
+                }
+
                 BookItemController itemController = fxmlLoader.getController();
-                itemController.setData(getBooksAuthor(books.get(i).getAuthor_id()), books.get(i).getDescription());
+                itemController.setOrderDAO(orderDAO);
+
+
+
+                itemController.setData(getBooksAuthor(books.get(i).getAuthor_id()), books.get(i).getDescription(), books.get(i).getId(), isBookOwned );
 
                 if (column == 3) {
                     column = 0;
                     row++;
                 }
-
 
                 bookGrid.add(anchorPane, column++, row);
             }
@@ -78,6 +93,10 @@ public class UserMainMenuController implements Initializable {
             e.printStackTrace();
         }
         return null;
+    }
+
+    private List<Long> loadBooksOwnedByUser() {
+        return orderDAO.findBookIDsOwnedByUser(UserSession.getUser().getId());
     }
 
     private String getBooksAuthor(Long id) {

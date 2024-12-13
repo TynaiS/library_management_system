@@ -16,6 +16,7 @@ public abstract class GenericDao<T> {
     // Save an entity to the database
     public void save(T entity) throws SQLException {
         String sql = generateInsertSQL(entity);  // Implement this method in child classes
+        System.out.println(sql);
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             setInsertParameters(stmt, entity);  // Implement this in child classes
             stmt.executeUpdate();
