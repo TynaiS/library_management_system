@@ -1,27 +1,18 @@
 package com.example.database_final_javafx.controller;
-import com.example.database_final_javafx.MainApplication;
-import com.example.database_final_javafx.dao.AuthorDAO;
-import com.example.database_final_javafx.dao.BookDAO;
-import com.example.database_final_javafx.dao.OrderDAO;
-import com.example.database_final_javafx.entity.Author;
+import com.example.database_final_javafx.DAO.AuthorDAO;
+import com.example.database_final_javafx.DAO.BookDAO;
+import com.example.database_final_javafx.DAO.OrderDAO;
 import com.example.database_final_javafx.entity.Book;
 import com.example.database_final_javafx.utils.UserSession;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 

@@ -1,7 +1,7 @@
 package com.example.database_final_javafx.controller;
 
 import com.example.database_final_javafx.MainApplication;
-import com.example.database_final_javafx.dao.UserDAO;
+import com.example.database_final_javafx.DAO.UserDAO;
 import com.example.database_final_javafx.entity.User;
 import com.example.database_final_javafx.utils.UserSession;
 import javafx.event.ActionEvent;

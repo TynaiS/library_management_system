@@ -1,8 +1,7 @@
 package com.example.database_final_javafx.controller;
 
-import com.example.database_final_javafx.dao.AuthorDAO;
+import com.example.database_final_javafx.DAO.AuthorDAO;
 import com.example.database_final_javafx.entity.Author;
-import com.example.database_final_javafx.utils.DatabaseUtil;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -13,7 +12,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.List;
 
 public class AuthorController {

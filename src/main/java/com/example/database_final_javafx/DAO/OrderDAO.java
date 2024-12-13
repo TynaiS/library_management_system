@@ -1,9 +1,6 @@
-package com.example.database_final_javafx.dao;
+package com.example.database_final_javafx.DAO;
 
-import com.example.database_final_javafx.entity.Book;
 import com.example.database_final_javafx.entity.Order;
-import com.example.database_final_javafx.entity.User;
-import com.example.database_final_javafx.utils.AccountType;
 import com.example.database_final_javafx.utils.GenericDao;
 
 import java.sql.*;

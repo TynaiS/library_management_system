@@ -1,4 +1,4 @@
-package com.example.database_final_javafx.dao;
+package com.example.database_final_javafx.DAO;
 
 import com.example.database_final_javafx.entity.Author;
 

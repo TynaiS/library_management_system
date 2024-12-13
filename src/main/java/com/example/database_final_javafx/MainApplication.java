@@ -1,10 +1,7 @@
 package com.example.database_final_javafx;
 
-import com.example.database_final_javafx.controller.AuthorController;
 import com.example.database_final_javafx.controller.LoginController;
 import com.example.database_final_javafx.controller.UserMainMenuController;
-import com.example.database_final_javafx.dao.AuthorDAO;
-import com.example.database_final_javafx.utils.CreateTables;
 import com.example.database_final_javafx.utils.DatabaseUtil;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -15,9 +12,6 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Supplier;
 
 public class MainApplication extends Application {
     private Connection connection;
