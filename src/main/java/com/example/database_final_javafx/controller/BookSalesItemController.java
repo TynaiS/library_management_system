@@ -5,27 +5,32 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public class BookItemController{
+public class BookSalesItemController {
 
     @FXML
     private Label authorLabel;
 
     @FXML
+    private Label titleLabel;
+
+    @FXML
     private Label descriptionLabel;
+
+    @FXML
+    private Label totalQuantitySoldLabel;
+
+    @FXML
+    private Label totalRevenueLabel;
 
     @FXML
     private ImageView image;
 
-//    public BookItemController(String authorLabel, String descriptionLabel, String imgSource) {
-//        this.authorLabel.setText(authorLabel);
-//        this.descriptionLabel.setText(descriptionLabel);
-//        Image image = new Image(getClass().getResourceAsStream("/img/it.jpg"));
-//        this.image.setImage(image);
-//    }
-
-    public void setData(String authorLabel, String descriptionLabel) {
+    public void setData(String authorLabel, String descriptionLabel, String titleLabel, Integer totalQuantitySoldLabel, Integer totalRevenueLabel) {
         this.authorLabel.setText(authorLabel);
         this.descriptionLabel.setText(descriptionLabel);
+        this.titleLabel.setText(titleLabel);
+        this.totalQuantitySoldLabel.setText("Total quantity sold: " + totalQuantitySoldLabel);
+        this.totalRevenueLabel.setText("Total revenue: $" + totalRevenueLabel);
         Image image = new Image(getClass().getResourceAsStream("/img/it.jpg"));
         this.image.setImage(image);
 

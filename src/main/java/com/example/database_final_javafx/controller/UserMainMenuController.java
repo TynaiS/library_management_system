@@ -1,31 +1,27 @@
 package com.example.database_final_javafx.controller;
-import com.example.database_final_javafx.MainApplication;
-import com.example.database_final_javafx.dao.AuthorDAO;
-import com.example.database_final_javafx.dao.BookDAO;
-import com.example.database_final_javafx.entity.Author;
+import com.example.database_final_javafx.DAO.AuthorDAO;
+import com.example.database_final_javafx.DAO.BookDAO;
 import com.example.database_final_javafx.entity.Book;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
+import lombok.NoArgsConstructor;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+
+@NoArgsConstructor
 public class UserMainMenuController implements Initializable {
     private BookDAO bookDAO;
     private AuthorDAO authorDAO;
+
+    private BookController bookController;
 
     @FXML
     private GridPane bookGrid;
@@ -33,6 +29,7 @@ public class UserMainMenuController implements Initializable {
     public UserMainMenuController(Connection connection) {
         this.bookDAO = new BookDAO(connection);
         this.authorDAO = new AuthorDAO(connection);
+        this.bookController = new BookController(connection);
     }
 
     @Override
@@ -56,18 +53,19 @@ public class UserMainMenuController implements Initializable {
                 AnchorPane anchorPane = fxmlLoader.load();
 
                 BookItemController itemController = fxmlLoader.getController();
-                itemController.setData(getBooksAuthor(books.get(i).getAuthor_id()), books.get(i).getDescription());
+                itemController.setData(bookController.getBooksAuthor(books.get(i).getAuthorId()), books.get(i).getDescription());
 
                 if (column == 3) {
                     column = 0;
                     row++;
                 }
 
-
                 bookGrid.add(anchorPane, column++, row);
             }
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -80,7 +78,5 @@ public class UserMainMenuController implements Initializable {
         return null;
     }
 
-    private String getBooksAuthor(Long id) {
-        return authorDAO.getAuthorById(id).getName();
-    }
+
 }

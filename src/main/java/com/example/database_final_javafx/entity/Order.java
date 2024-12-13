@@ -17,10 +17,10 @@ import java.util.Date;
 public class Order {
 
         private Long id;
-        private Long user_id;
-        private Long book_id;
-        private LocalDateTime order_date;
+        private Long userId;
+        private Long bookId;
+        private LocalDateTime orderDate;
         private Integer quantity;
-        private Integer total_amount;
+        private Integer totalAmount;
 
 }

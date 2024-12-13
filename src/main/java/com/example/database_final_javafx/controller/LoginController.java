@@ -1,8 +1,10 @@
 package com.example.database_final_javafx.controller;
 
 import com.example.database_final_javafx.MainApplication;
-import com.example.database_final_javafx.dao.UserDAO;
+import com.example.database_final_javafx.DAO.UserDAO;
+import com.example.database_final_javafx.MainController;
 import com.example.database_final_javafx.entity.User;
+import com.example.database_final_javafx.utils.AccountType;
 import com.example.database_final_javafx.utils.UserSession;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,11 +13,19 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import lombok.NoArgsConstructor;
 
 import java.io.IOException;
 import java.sql.Connection;
 
+@NoArgsConstructor
 public class LoginController {
+
+    private MainController mainController;
+
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
+    }
 
     private UserDAO userDAO;
     private MainApplication mainApplication;
@@ -62,7 +72,11 @@ public class LoginController {
 
         if (user != null) {
             UserSession.setUser(user);
-            mainApplication.showBookListPage();
+            if(UserSession.getUser().getAccountType() == AccountType.ADMIN){
+                mainController.loadAdminPage();
+            } else {
+                mainController.loadUserPage();
+            }
         } else {
             showAlert(Alert.AlertType.ERROR, "Login Failed", "Invalid credentials. Please try again.");
         }

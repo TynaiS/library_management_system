@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
-
-<VBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.database_final_javafx.controller.AuthorController">
-    <HBox spacing="10">
-        <TextField fx:id="authorNameField" promptText="Enter author's name"/>
-        <Button text="Add Author" onAction="#handleAddAuthor"/>
-    </HBox>
-
-    <TableView fx:id="authorTable">
-        <columns>
-            <TableColumn fx:id="idColumn" text="ID" />
-            <TableColumn fx:id="nameColumn" text="Name" />
-        </columns>
-    </TableView>
-</VBox>
+<?import javafx.scene.layout.VBox?>
+<BorderPane prefHeight="600" prefWidth="700" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.database_final_javafx.MainController">
+    <VBox>
+        <Button text="Logout" mnemonicParsing="false" onAction="#handleLogout" prefWidth="100"/>
+    </VBox>
+    <center>
+        <StackPane fx:id="contentPane">
+            <!-- Pages will be dynamically loaded here -->
+        </StackPane>
+    </center>
+</BorderPane>

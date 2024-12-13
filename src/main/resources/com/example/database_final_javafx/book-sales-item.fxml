@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane style="-fx-border-color: black; -fx-border-width: 2;" prefHeight="314.0" prefWidth="154.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.database_final_javafx.controller.BookSalesItemController">
+    <children>
+        <ImageView fx:id="image" layoutX="7" layoutY="7" fitHeight="233.0" fitWidth="177.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../../../../img/it.jpg" />
+            </image>
+        </ImageView>
+
+        <Label fx:id="titleLabel" alignment="TOP_LEFT" layoutX="14.0" layoutY="255.0" prefHeight="41.0" prefWidth="146.0" text="Title" />
+
+        <Label fx:id="descriptionLabel" alignment="TOP_LEFT" layoutX="14.0" layoutY="295.0" prefHeight="41.0" prefWidth="146.0" text="Description" />
+
+        <Label fx:id="authorLabel" layoutX="14.0" layoutY="335.0" text="Author" />
+
+        <Label fx:id="totalQuantitySoldLabel" layoutX="14.0" layoutY="355.0" text="Total quantity sold" />
+
+        <Label fx:id="totalRevenueLabel" layoutX="14.0" layoutY="375.0" text="Total revenue" />
+    </children>
+</AnchorPane>
