@@ -46,7 +46,7 @@ public class UserDAO extends GenericDao<User> {
 
     @Override
     protected String generateUpdateSQL(User user) {
-        return "update user set where";
+        return "update users set where";
     }
 
     @Override
