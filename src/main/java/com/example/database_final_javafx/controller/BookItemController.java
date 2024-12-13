@@ -28,12 +28,12 @@ public class BookItemController{
     private Button buyButton;
 
     @FXML
-    private Label bookItems;
+    private Label bookItemsLabel;
 
     private OrderDAO orderDAO;
     private Long bookId;
 
-    public void setData(String authorLabel, String descriptionLabel, Long id, boolean isOwned) {
+    public void setData(String authorLabel, String descriptionLabel, Long id, int booksCount) {
         this.bookId = id;
 
         this.authorLabel.setText(authorLabel);
@@ -45,7 +45,7 @@ public class BookItemController{
         this.image.setPreserveRatio(true); // Maintain aspect ratio
         this.authorLabel.setWrapText(true); // Wrap text for long descriptions
         this.descriptionLabel.setWrapText(true);
-
+        this.bookItemsLabel.setText(String.valueOf(booksCount));
     }
 
     public void setOrderDAO (OrderDAO orderDAO) {
@@ -59,10 +59,12 @@ public class BookItemController{
                     .book_id(bookId)
                     .user_id(UserSession.getUser().getId())
                     .order_date(LocalDateTime.now())
-                    .quantity(150)
+                    .quantity(1)
                     .total_amount(150)
                     .build();
             orderDAO.save(order);
+
+            this.bookItemsLabel.setText( String.valueOf(Integer.parseInt(this.bookItemsLabel.getText()) + 1) );
         } catch (SQLException e) {
             e.printStackTrace();
         }

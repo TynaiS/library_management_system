@@ -1,5 +1,6 @@
 package com.example.database_final_javafx.DAO;
 
+import com.example.database_final_javafx.DTO.BooksOwnedByUserDTO;
 import com.example.database_final_javafx.entity.Order;
 import com.example.database_final_javafx.utils.GenericDao;
 
@@ -15,18 +16,22 @@ public class OrderDAO extends GenericDao<Order> {
     }
 
 
-    public List<Long> findBookIDsOwnedByUser (Long userId) {
-        List<Long> result = new ArrayList<>();
-//        String sql = "select book_id, user_id, count(*) as owned_books_count from " + getTableName() + " where user_id = ? group by book_id, user_id";
-//        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-//            stmt.setLong(1, userId);
-//            ResultSet rs = stmt.executeQuery(sql);
-//            while (rs.next()) {
-//                result.add(rs.getLong("book_id"));
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
+    public List<BooksOwnedByUserDTO> findBookIDsOwnedByUser (Long userId) {
+        List<BooksOwnedByUserDTO> result = new ArrayList<>();
+        String sql = "select book_id, user_id, count(*) as owned_books_count from " + getTableName() + " where user_id = ? group by book_id, user_id";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setLong(1, userId);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                result.add(BooksOwnedByUserDTO.builder()
+                        .userId(userId)
+                        .ownedBooksCount(rs.getInt("owned_books_count"))
+                        .bookId(rs.getLong("book_id"))
+                        .build());
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return result;
     }
 

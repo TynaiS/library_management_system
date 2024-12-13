@@ -5,29 +5,33 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <AnchorPane prefHeight="400.0" prefWidth="788.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.database_final_javafx.controller.UserMainMenuController">
-   <children>
-      <Text layoutX="14.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Book Store">
-         <font>
-            <Font size="36.0" />
-         </font>
-      </Text>
-       <ScrollPane layoutX="15.0" layoutY="62.0" prefHeight="327.0" prefWidth="758.0">
-           <content>
-               <GridPane fx:id="bookGrid">
-                   <columnConstraints>
-                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                   </columnConstraints>
-                   <rowConstraints>
-                       <RowConstraints />
-                       <RowConstraints />
-                       <RowConstraints />
-                   </rowConstraints>
-               </GridPane>
-           </content>
-       </ScrollPane>
-   </children>
+    <children>
+        <Text layoutX="14.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Book Store">
+            <font>
+                <Font size="36.0" />
+            </font>
+        </Text>
+        <ScrollPane layoutX="15.0" layoutY="62.0" prefHeight="327.0" prefWidth="758.0">
+            <content>
+                <!-- Wrapping GridPane in StackPane -->
+                <StackPane>
+                    <GridPane fx:id="bookGrid">
+                        <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        </columnConstraints>
+                        <rowConstraints>
+                            <RowConstraints />
+                            <RowConstraints />
+                            <RowConstraints />
+                        </rowConstraints>
+                    </GridPane>
+                </StackPane>
+            </content>
+        </ScrollPane>
+    </children>
 </AnchorPane>
