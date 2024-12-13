@@ -13,4 +13,5 @@ module com.example.database_final_javafx {
 
     exports com.example.database_final_javafx;
     exports com.example.database_final_javafx.utils;
+    opens com.example.database_final_javafx.DTO to javafx.base;
 }

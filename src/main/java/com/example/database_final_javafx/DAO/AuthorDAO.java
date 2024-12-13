@@ -1,86 +1,58 @@
 package com.example.database_final_javafx.DAO;
 
 import com.example.database_final_javafx.entity.Author;
+import com.example.database_final_javafx.utils.GenericDao;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
-public class AuthorDAO {
+public class AuthorDAO extends GenericDao<Author> {
+    public AuthorDAO(Connection connection) {super(connection);}
 
-    private Connection conn;
-
-    public AuthorDAO(Connection conn) {
-        this.conn = conn;
+    @Override
+    protected String getTableName() {
+        return "author";
     }
 
-    public Connection getConnection() {
-        return conn;
-    }
-
-    public void setConnection(Connection conn) {
-        this.conn = conn;
-    }
-
-    public void addAuthor(Author author) {
+    @Override
+    protected String generateInsertSQL(Author author) {
         String query = "INSERT INTO author(name) VALUES (?)";
-        try (PreparedStatement ps = conn.prepareStatement(query)) {
-            ps.setString(1, author.getName());
-            ps.executeUpdate();
-        } catch (SQLException e) {
-
-            System.out.println("Oh NOO");
-            e.printStackTrace();
-
-        }
+        String authorName = author.getName().replace("'", "''");
+        return "INSERT INTO author(name) VALUES ('" + authorName + "')";
     }
 
-    public List<Author> getAllAuthors() {
-        List<Author> authors = new ArrayList<>();
-        String query = "SELECT * FROM Author";
-
-        try (Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
-
-            while (rs.next()) {
-                Author author = new Author();
-                author.setId(rs.getLong("id"));
-                author.setName(rs.getString("name"));
-                authors.add(author);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return authors;
+    @Override
+    protected String generateUpdateSQL(Author entity) {
+        return null;
     }
 
-    public Author getAuthorById(Long id) {
-        String query = "SELECT * FROM Author WHERE id = ?";
-        Author author = null;
+    @Override
+    protected void setInsertParameters(PreparedStatement stmt, Author entity) throws SQLException {
 
-        try (PreparedStatement ps = conn.prepareStatement(query)) {
-            ps.setLong(1, id);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    author = new Author();
-                    author.setId(rs.getLong("id"));
-                    author.setName(rs.getString("name"));
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    }
+
+    @Override
+    protected void setUpdateParameters(PreparedStatement stmt, Author entity) throws SQLException {
+
+    }
+
+    @Override
+    protected Author mapResultSetToEntity(ResultSet rs) throws SQLException {
+        Author author = Author.builder()
+                .id(rs.getLong("id"))
+                .name(rs.getString("name"))
+                .build();
         return author;
     }
 
-    public void deleteAuthor(Long id) {
-        String query = "DELETE FROM Author WHERE id = ?";
-
-        try (PreparedStatement ps = conn.prepareStatement(query)) {
-            ps.setLong(1, id);
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
+    public Author findByName(String name) throws SQLException {
+        String sql = "SELECT * FROM author WHERE name = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, name);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return new Author(resultSet.getLong("id"), resultSet.getString("name"));
+            }
+            return null;
         }
     }
 }

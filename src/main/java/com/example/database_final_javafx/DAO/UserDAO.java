@@ -60,11 +60,13 @@ public class UserDAO extends GenericDao<User> {
     @Override
     protected User mapResultSetToEntity(ResultSet rs) throws SQLException {
         System.out.println(rs);
-        long id = rs.getLong("id");
-        String name = rs.getString("name");
-        String email = rs.getString("email");
-        String password = rs.getString("password");
-        AccountType accountType = AccountType.valueOf(rs.getString("account_type"));
-        return new User(id, name, email, password, accountType);
+        User user = User.builder()
+                .id(rs.getLong("id"))
+                .name(rs.getString("name"))
+                .email(rs.getString("email"))
+                .password(rs.getString("password"))
+                .accountType(AccountType.valueOf(rs.getString("account_type")))
+                .build();
+        return user;
     }
 }

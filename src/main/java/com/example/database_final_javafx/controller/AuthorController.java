@@ -31,7 +31,7 @@ public class AuthorController {
     }
 
     @FXML
-    public void initialize() {
+    public void initialize() throws SQLException {
         // Set up the table columns
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -42,7 +42,7 @@ public class AuthorController {
 
     // Handle the "Add Author" button click
     @FXML
-    public void handleAddAuthor() {
+    public void handleAddAuthor() throws SQLException {
         String name = authorNameField.getText();
 
         if (name.isEmpty()) {
@@ -53,7 +53,7 @@ public class AuthorController {
         Author author = Author.builder()
                 .name(name)
                 .build();
-        authorDAO.addAuthor(author);
+        authorDAO.save(author);
 
         // Clear the input field
         authorNameField.clear();
@@ -66,8 +66,8 @@ public class AuthorController {
     }
 
     // Load the authors from the database and display them in the table
-    private void loadAuthors() {
-        List<Author> authors = authorDAO.getAllAuthors();
+    private void loadAuthors() throws SQLException {
+        List<Author> authors = authorDAO.findAll();
         authorTable.getItems().setAll(authors);
     }
 

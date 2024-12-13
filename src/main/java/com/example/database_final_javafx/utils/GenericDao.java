@@ -6,7 +6,7 @@ import java.util.List;
 
 public abstract class GenericDao<T> {
 
-    protected  Connection connection;
+    protected Connection connection;
 
     // Constructor to initialize database connection
     public GenericDao(Connection connection) {
@@ -18,7 +18,8 @@ public abstract class GenericDao<T> {
         String sql = generateInsertSQL(entity);  // Implement this method in child classes
         System.out.println(sql);
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            setInsertParameters(stmt, entity);  // Implement this in child classes
+            setInsertParameters(stmt, entity);
+            System.out.println(stmt);
             stmt.executeUpdate();
         }
     }
@@ -33,19 +34,19 @@ public abstract class GenericDao<T> {
     }
 
     // Delete an entity from the database
-    public void delete(int id) throws SQLException {
+    public void delete(Long id) throws SQLException {
         String sql = "DELETE FROM " + getTableName() + " WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setInt(1, id);
+            stmt.setLong(1, id);
             stmt.executeUpdate();
         }
     }
 
     // Find an entity by its ID
-    public T findById(int id) throws SQLException {
+    public T findById(Long id) throws SQLException {
         String sql = "SELECT * FROM " + getTableName() + " WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setInt(1, id);
+            stmt.setLong(1, id);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 return mapResultSetToEntity(rs);  // Implement this method in child classes

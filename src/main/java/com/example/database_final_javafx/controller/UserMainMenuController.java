@@ -11,6 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.layout.*;
+import lombok.NoArgsConstructor;
 
 import java.io.IOException;
 import java.net.URL;
@@ -19,11 +20,14 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
 
+
+@NoArgsConstructor
 public class UserMainMenuController implements Initializable {
     private BookDAO bookDAO;
     private AuthorDAO authorDAO;
 
     private OrderDAO orderDAO;
+    private BookController bookController;
 
     @FXML
     private GridPane bookGrid;
@@ -32,6 +36,7 @@ public class UserMainMenuController implements Initializable {
         this.bookDAO = new BookDAO(connection);
         this.authorDAO = new AuthorDAO(connection);
         this.orderDAO = new OrderDAO(connection);
+        this.bookController = new BookController(connection);
     }
 
     @Override
@@ -72,6 +77,8 @@ public class UserMainMenuController implements Initializable {
             }
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
