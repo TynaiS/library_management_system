@@ -52,11 +52,11 @@ public class OrderDAO extends GenericDao<Order> {
 
     @Override
     protected void setInsertParameters(PreparedStatement stmt, Order entity) throws SQLException {
-        stmt.setLong(1, entity.getUser_id());
-        stmt.setLong(2, entity.getBook_id());
-        stmt.setTimestamp(3, Timestamp.valueOf(entity.getOrder_date()));
+        stmt.setLong(1, entity.getUserId());
+        stmt.setLong(2, entity.getBookId());
+        stmt.setTimestamp(3, Timestamp.valueOf(entity.getOrderDate()));
         stmt.setInt(4, entity.getQuantity());
-        stmt.setInt(5, entity.getTotal_amount());
+        stmt.setInt(5, entity.getTotalAmount());
     }
 
     @Override

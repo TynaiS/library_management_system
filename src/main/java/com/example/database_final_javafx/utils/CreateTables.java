@@ -45,7 +45,7 @@ public class CreateTables {
             """;
 
         String createOrderTableSQL = """
-            CREATE TABLE IF NOT EXISTS "order" (
+            CREATE TABLE IF NOT EXISTS "orders" (
                 id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
                 user_id BIGINT NOT NULL,
                 book_id BIGINT NOT NULL,
@@ -216,7 +216,7 @@ public class CreateTables {
               """;
 
         String insertOrdersSQL = """
-                INSERT INTO "order" (user_id, book_id, order_date, quantity, total_amount) VALUES
+                INSERT INTO "orders" (user_id, book_id, order_date, quantity, total_amount) VALUES
                   (10, 16, '2024-11-14 10:32:10', 1, 18),
                   (1, 10, '2024-11-28 07:15:49', 3, 66),
                   (17, 12, '2024-12-07 05:40:30', 2, 28),

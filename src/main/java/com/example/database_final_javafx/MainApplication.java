@@ -37,7 +37,6 @@ public class MainApplication extends Application {
         }
 
 //        CreateTables createTables = new CreateTables(connection);
-//
 //        createTables.create();
 
         this.stage = stage;

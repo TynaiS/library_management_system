@@ -56,11 +56,11 @@ public class BookItemController{
     public void handleBuy(ActionEvent event) {
         try {
             Order order = Order.builder()
-                    .book_id(bookId)
-                    .user_id(UserSession.getUser().getId())
-                    .order_date(LocalDateTime.now())
+                    .bookId(bookId)
+                    .userId(UserSession.getUser().getId())
+                    .orderDate(LocalDateTime.now())
                     .quantity(1)
-                    .total_amount(150)
+                    .totalAmount(150)
                     .build();
             orderDAO.save(order);
 

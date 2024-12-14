@@ -24,12 +24,13 @@ public class BookDAO extends GenericDao<Book> {
                 b.description,
                 b.price,
                 b.stock_quantity,
-                SUM(o.quantity) AS total_quantity_sold,
-                SUM(o.total_amount) AS total_revenue
+                COALESCE(SUM(o.quantity), 0) AS total_quantity_sold,
+                COALESCE(SUM(o.total_amount), 0) AS total_revenue
+                
             FROM
                 book b
-            JOIN 
-                "order" o ON b.id = o.book_id
+            LEFT JOIN 
+                "orders" o ON b.id = o.book_id
             GROUP BY 
                 b.id, b.title, b.description, b.price, b.stock_quantity
             ORDER BY 

@@ -66,7 +66,7 @@ public class UserMainMenuController implements Initializable {
                 BookItemController itemController = fxmlLoader.getController();
                 itemController.setOrderDAO(orderDAO);
 
-                itemController.setData(getBooksAuthor(books.get(i).getAuthor_id()), books.get(i).getDescription(), books.get(i).getId(), getCountOfOwnedBook(booksOwnedByUser, books.get(i).getId()) );
+                itemController.setData(getBooksAuthor(books.get(i).getAuthorId()), books.get(i).getDescription(), books.get(i).getId(), getCountOfOwnedBook(booksOwnedByUser, books.get(i).getId()) );
 
                 if (column == 4) {
                     column = 0;
@@ -95,8 +95,8 @@ public class UserMainMenuController implements Initializable {
         return orderDAO.findBookIDsOwnedByUser(UserSession.getUser().getId());
     }
 
-    private String getBooksAuthor(Long id) {
-        return authorDAO.getAuthorById(id).getName();
+    private String getBooksAuthor(Long id) throws SQLException {
+        return authorDAO.findById(id).getName();
     }
 
     private int getCountOfOwnedBook (List<BooksOwnedByUserDTO> booksOwnedByUserDTOs, Long bookId) {
