@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class UserBuyBookController {
     private OrderDAO orderDAO;
@@ -30,7 +31,7 @@ public class UserBuyBookController {
     private TextField quantityField;
 
     @FXML
-    private void handleBuy() {
+    private void handleBuy() throws SQLException {
         if (quantityField.getText().isEmpty()) {
             AlertShower alertShower = AlertShower.builder()
                     .alertType(Alert.AlertType.ERROR)
@@ -40,12 +41,16 @@ public class UserBuyBookController {
                     .build();
             alertShower.showAlert();
         } else {
+            boolean orderCreated = false;
+            LocalDateTime orderCreatedTime = LocalDateTime.now();
+            Integer quantity = 0;
+
             try {
-                Integer quantity = Integer.parseInt(this.quantityField.getText());
+                quantity = Integer.parseInt(this.quantityField.getText());
                 Order order = Order.builder()
                         .bookId(bookId)
                         .userId(UserSession.getUser().getId())
-                        .orderDate(LocalDateTime.now())
+                        .orderDate(orderCreatedTime)
                         .quantity(quantity)
                         .totalAmount(amount * quantity)
                         .build();
@@ -55,6 +60,7 @@ public class UserBuyBookController {
                 if (newQuantity < 0) throw new NotEnoughItemsException("Not enough items in DB, please lower quantity");
 
                 orderDAO.save(order);
+                orderCreated = true;
                 bookDAO.updateBooksQuantity(bookId, newQuantity);
             } catch (NumberFormatException e) {
                 AlertShower alertShower = AlertShower.builder()
@@ -65,9 +71,13 @@ public class UserBuyBookController {
                         .build();
                 alertShower.showAlert();
             } catch (SQLException e) {
+                if (orderCreated) {
+                    Order order = orderDAO.findOrderByDateAndUserAndBookIdAndQuantity(orderCreatedTime, UserSession.getUser().getId(), bookId, quantity);
+                    orderDAO.delete(order.getId());
+                }
                 AlertShower alertShower = AlertShower.builder()
                         .alertType(Alert.AlertType.ERROR)
-                        .title("Error ")
+                        .title("Error")
                         .header("Error")
                         .text(e.getMessage())
                         .build();
