@@ -28,7 +28,7 @@ public class BookDAO extends GenericDao<Book> {
                 COALESCE(SUM(o.total_amount), 0) AS total_revenue
                 
             FROM
-                book b
+                books b
             LEFT JOIN 
                 "orders" o ON b.id = o.book_id
             GROUP BY 
@@ -53,7 +53,7 @@ public class BookDAO extends GenericDao<Book> {
     }
 
     public List<Book> findBooksOwnedByUser(Long userId) throws Exception {
-        String sql = "select distinct b.id, b.author_id, b.description, b.price, b.stock_quantity, b.title from book b inner join orders o on b.id = o.book_id where o.user_id = ?";
+        String sql = "select distinct b.id, b.author_id, b.description, b.price, b.stock_quantity, b.title from books b inner join orders o on b.id = o.book_id where o.user_id = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setLong(1, userId);
@@ -69,7 +69,7 @@ public class BookDAO extends GenericDao<Book> {
     }
 
     public void updateBooksQuantity(Long bookId, int newQuantity) throws SQLException {
-        String sql = "update book set stock_quantity = ? where id = ?";
+        String sql = "update books set stock_quantity = ? where id = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setLong(1, newQuantity);

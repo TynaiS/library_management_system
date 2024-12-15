@@ -70,7 +70,7 @@ public class MainController {
     }
 
     public void handleLogout() throws IOException {
-        // Example: Reset the view to login
+        logoutButton.setVisible(false);
         UserSession.clearUser();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
         Pane loginPage = loader.load();

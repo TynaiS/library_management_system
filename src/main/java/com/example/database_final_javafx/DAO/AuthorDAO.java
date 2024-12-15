@@ -15,9 +15,9 @@ public class AuthorDAO extends GenericDao<Author> {
 
     @Override
     protected String generateInsertSQL(Author author) {
-        String query = "INSERT INTO author(name) VALUES (?)";
+        String query = "INSERT INTO authors(name) VALUES (?)";
         String authorName = author.getName().replace("'", "''");
-        return "INSERT INTO author(name) VALUES ('" + authorName + "')";
+        return "INSERT INTO authors(name) VALUES ('" + authorName + "')";
     }
 
     @Override
