@@ -8,16 +8,27 @@ import java.sql.*;
 public class AuthorDAO extends GenericDao<Author> {
     public AuthorDAO(Connection connection) {super(connection);}
 
+    public Integer countAllAuthors() {
+        String sql = "SELECT COUNT(*) AS total_authors FROM " + getTableName();
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("total_authors");
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return 0;
+    }
+
     @Override
     protected String getTableName() {
-        return "author";
+        return "authors";
     }
 
     @Override
     protected String generateInsertSQL(Author author) {
-        String query = "INSERT INTO author(name) VALUES (?)";
-        String authorName = author.getName().replace("'", "''");
-        return "INSERT INTO author(name) VALUES ('" + authorName + "')";
+        return "INSERT INTO " + getTableName() + "(name) VALUES (?)";
     }
 
     @Override
@@ -27,7 +38,7 @@ public class AuthorDAO extends GenericDao<Author> {
 
     @Override
     protected void setInsertParameters(PreparedStatement stmt, Author entity) throws SQLException {
-
+        stmt.setString(1, entity.getName());
     }
 
     @Override
@@ -45,7 +56,7 @@ public class AuthorDAO extends GenericDao<Author> {
     }
 
     public Author findByName(String name) throws SQLException {
-        String sql = "SELECT * FROM author WHERE name = ?";
+        String sql = "SELECT * FROM " + getTableName() + " WHERE name = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, name);
             ResultSet resultSet = statement.executeQuery();

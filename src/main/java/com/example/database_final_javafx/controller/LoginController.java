@@ -5,6 +5,7 @@ import com.example.database_final_javafx.DAO.UserDAO;
 import com.example.database_final_javafx.MainController;
 import com.example.database_final_javafx.entity.User;
 import com.example.database_final_javafx.utils.AccountType;
+import com.example.database_final_javafx.utils.AlertUtils;
 import com.example.database_final_javafx.utils.UserSession;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -48,30 +49,32 @@ public class LoginController {
 
     @FXML
     private void handleLogin(ActionEvent event) throws IOException {
-        String username = usernameField.getText();
-        String password = passwordField.getText();
+        mainController.loadAdminPage();
 
-        if (username.isEmpty() || password.isEmpty()) {
-            showAlert(Alert.AlertType.ERROR, "Login Failed", "Please enter both username and password.");
-            return;
-        }
-
-
-        User user = userDAO.findByUsernameAndPassword(username, password);
-        System.out.println("test");
-
-
-
-        if (user != null) {
-            UserSession.setUser(user);
-            if(UserSession.getUser().getAccountType() == AccountType.ADMIN){
-                mainController.loadAdminPage();
-            } else {
-                mainController.loadUserPage();
-            }
-        } else {
-            showAlert(Alert.AlertType.ERROR, "Login Failed", "Invalid credentials. Please try again.");
-        }
+//        String username = usernameField.getText();
+//        String password = passwordField.getText();
+//
+//        if (username.isEmpty() || password.isEmpty()) {
+//            AlertUtils.showAlert(Alert.AlertType.ERROR, "Login Failed", "Please enter both username and password.");
+//            return;
+//        }
+//
+//
+//        User user = userDAO.findByUsernameAndPassword(username, password);
+//        System.out.println("test");
+//
+//
+//
+//        if (user != null) {
+//            UserSession.setUser(user);
+//            if(UserSession.getUser().getAccountType() == AccountType.ADMIN){
+//                mainController.loadAdminPage();
+//            } else {
+//                mainController.loadUserPage();
+//            }
+//        } else {
+//            AlertUtils.showAlert(Alert.AlertType.ERROR, "Login Failed", "Invalid credentials. Please try again.");
+//        }
     }
 
     @FXML
@@ -95,13 +98,5 @@ public class LoginController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    private void showAlert(Alert.AlertType alertType, String title, String message) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 }

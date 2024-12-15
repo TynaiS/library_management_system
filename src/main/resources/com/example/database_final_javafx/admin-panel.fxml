@@ -1,50 +1,111 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
-
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.layout.StackPane?>
-<AnchorPane prefHeight="400.0" prefWidth="788.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.database_final_javafx.controller.AdminPanelController">
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<?import javafx.geometry.Insets?>
+<VBox fx:id="adminPanelVBox" prefWidth="788.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.database_final_javafx.controller.AdminPanelController">
     <children>
+        <!-- BOOKS Section -->
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <VBox.margin>
+                <Insets top="30"/>
+            </VBox.margin>
+            <Label text="BOOKS"/>
+        </HBox>
 
-        <AnchorPane>
-            <Label text="1) See top-selling books (Enter the number of top-selling books:)" />
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Button text="Add book" onAction="#openAddBookForm" />
+        </HBox>
 
-            <HBox layoutY="20.0" spacing="10" alignment="CENTER">
-                <TextField fx:id="topNInput" promptText="Enter a number" prefWidth="200" />
-                <Button text="Get Top Selling Books" onAction="#getTopSellingBooks" />
-                <Button text="Close" onAction="#closeTopSellingBooks" />
-                <Label fx:id="errorMessageLabel" layoutX="100.0" layoutY="180.0" textFill="red" visible="false" />
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <VBox>
+                <Label fx:id="totalBooksNumLabel" text="Total number of books: "/>
+                <Label fx:id="availableBooksNumLabel" text="Total number available of books: "/>
+                <Label fx:id="totalBooksRevenueLabel" text="Total books revenue: $"/>
+            </VBox>
+            <Button fx:id="refreshBooksButton" text="Refresh" onAction="#refreshBooksNum"/>
+        </HBox>
+
+        <!-- Enter the number of books Section -->
+        <VBox spacing="10">
+            <VBox.margin>
+                <Insets top="20"/>
+            </VBox.margin>
+            <Label text="1) Enter the number of books(N) and choose one of the options: " />
+            <HBox spacing="10">
+                <TextField fx:id="topNInput" promptText="Enter a number" prefWidth="150" />
+                <Button text="Get Top N Best-Selling Books" onAction="#getTopBestSellingBooks" />
+                <Button text="Get Top N Worst-Selling Books" onAction="#getTopWorstSellingBooks" />
+                <Button text="Close Books List" onAction="#closeBooksList" />
+                <Label fx:id="errorMessageLabelBooks" textFill="red" visible="false"/>
             </HBox>
-            <ScrollPane fx:id="bookTopSalesScroll" layoutX="15.0" layoutY="60.0" prefHeight="327.0" prefWidth="758.0">
+            <ScrollPane fx:id="bookTopSalesScroll" prefWidth="758.0" prefHeight="327.0">
                 <content>
                     <GridPane fx:id="bookGrid">
                         <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
                         </columnConstraints>
                         <rowConstraints>
-                            <RowConstraints />
-                            <RowConstraints />
-                            <RowConstraints />
+                            <RowConstraints/>
+                            <RowConstraints/>
+                            <RowConstraints/>
                         </rowConstraints>
                     </GridPane>
                 </content>
             </ScrollPane>
-        </AnchorPane>
+        </VBox>
 
-        <AnchorPane layoutY="100">
-            <Button text="Add book" onAction="#openAddBookForm" />
-        </AnchorPane>
+        <!-- Book Top Sales Scroll Section -->
+
+
+        <!-- AUTHORS Section -->
+        <VBox fx:id="authorsSection">
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <VBox.margin>
+                    <Insets top="30"/>
+                </VBox.margin>
+                <Label text="AUTHORS"/>
+            </HBox>
+
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Add new author" />
+                <TextField fx:id="newAuthorNameField" prefWidth="200.0"/>
+                <Button text="Add author" onAction="#addAuthor" />
+                <Label fx:id="errorMessageLabelAuthor" textFill="red" visible="false"/>
+            </HBox>
+
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <VBox.margin>
+                    <Insets top="20"/>
+                </VBox.margin>
+                <VBox>
+                    <Label fx:id="totalAuthorsNumLabel" text="Total number of authors: "/>
+                </VBox>
+                <Button fx:id="refreshAuthorsButton" text="Refresh" onAction="#refreshAuthorsNum"/>
+            </HBox>
+
+            <ScrollPane fx:id="authorsScroll" prefWidth="758.0" prefHeight="327.0">
+                <content>
+                    <GridPane fx:id="authorsGrid">
+                        <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                        </columnConstraints>
+                        <rowConstraints>
+                            <RowConstraints/>
+                            <RowConstraints/>
+                            <RowConstraints/>
+                        </rowConstraints>
+                    </GridPane>
+                </content>
+            </ScrollPane>
+        </VBox>
 
     </children>
-</AnchorPane>
+</VBox>

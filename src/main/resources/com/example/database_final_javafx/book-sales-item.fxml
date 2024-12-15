@@ -5,6 +5,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
+<?import javafx.scene.control.Button?>
 <AnchorPane style="-fx-border-color: black; -fx-border-width: 2;" prefHeight="314.0" prefWidth="154.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.database_final_javafx.controller.BookSalesItemController">
     <children>
         <ImageView fx:id="image" layoutX="7" layoutY="7" fitHeight="233.0" fitWidth="177.0" pickOnBounds="true" preserveRatio="true">
@@ -19,8 +20,16 @@
 
         <Label fx:id="authorLabel" layoutX="14.0" layoutY="335.0" text="Author" />
 
-        <Label fx:id="totalQuantitySoldLabel" layoutX="14.0" layoutY="355.0" text="Total quantity sold" />
+        <Label fx:id="priceLabel" layoutX="14.0" layoutY="355.0" text="Author" />
 
-        <Label fx:id="totalRevenueLabel" layoutX="14.0" layoutY="375.0" text="Total revenue" />
+        <Label fx:id="totalQuantitySoldLabel" layoutX="14.0" layoutY="375.0" text="Total quantity sold" />
+
+        <Label fx:id="totalRevenueLabel" layoutX="14.0" layoutY="395.0" text="Total revenue" />
+
+        <Label fx:id="stockQuantityLabel" layoutX="14.0" layoutY="415.0" text="Stock quantity" />
+
+        <Label fx:id="availabilityLabel" layoutX="14.0" layoutY="435.0" text="Is available" />
+
+        <Button fx:id="editButton" layoutX="14.0" layoutY="455.0" text="Edit" onAction="#openEditBookModal"/>
     </children>
 </AnchorPane>

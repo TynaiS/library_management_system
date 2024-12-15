@@ -14,49 +14,24 @@ import java.io.IOException;
 
 
 @NoArgsConstructor
-public class BookSalesItemController {
+public class AuthorItemController{
 
+    @FXML
+    public Label nameLabel;
+    @FXML
+    public Label totalSalesLabel;
+    @FXML
+    public Label totalRevenueLabel;
+    @FXML
+    public Label totalBooksLabel;
+    @FXML
+    public Label totalAvailableBooksLabel;
     MainApplication mainApplication;
 
     private BookDAO bookDAO;
 
-    @FXML
-    private Label authorLabel;
+    public void setData(MainApplication mainApplication, String name, Integer author, String description, String title, Integer price, Integer totalQuantitySold, Integer totalRevenue, Integer stockQuantity, Boolean availability) {
 
-    @FXML
-    private Label titleLabel;
-
-    @FXML
-    private Label priceLabel;
-
-    @FXML
-    private Label descriptionLabel;
-
-    @FXML
-    private Label totalQuantitySoldLabel;
-
-    @FXML
-    private Label totalRevenueLabel;
-
-    @FXML
-    private Label stockQuantityLabel;
-
-    @FXML Label availabilityLabel;
-
-    @FXML
-    private ImageView image;
-
-    private Long bookId;
-
-    public void setData(MainApplication mainApplication, Long bookId, String author, String description, String title, Integer price, Integer totalQuantitySold, Integer totalRevenue, Integer stockQuantity, Boolean availability) {
-        this.mainApplication = mainApplication;
-        this.bookId = bookId;
-        this.authorLabel.setText(author);
-        this.descriptionLabel.setText(description);
-        this.titleLabel.setText(title);
-        this.priceLabel.setText("Price: $" + price);
-        this.totalQuantitySoldLabel.setText("Total quantity sold: " + totalQuantitySold);
-        this.totalRevenueLabel.setText("Total revenue: $" + totalRevenue);
         this.stockQuantityLabel.setText("Stock quantity: " + stockQuantity);
         this.availabilityLabel.setText("Is available: " + (availability ? "Yes" : "No"));
         Image image = new Image(getClass().getResourceAsStream("/img/it.jpg"));

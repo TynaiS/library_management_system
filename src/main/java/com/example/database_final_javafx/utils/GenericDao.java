@@ -27,8 +27,10 @@ public abstract class GenericDao<T> {
     // Update an entity in the database
     public void update(T entity) throws SQLException {
         String sql = generateUpdateSQL(entity);  // Implement this method in child classes
+        System.out.println(entity + "  " + sql);
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             setUpdateParameters(stmt, entity);  // Implement this in child classes
+            System.out.println(stmt);
             stmt.executeUpdate();
         }
     }

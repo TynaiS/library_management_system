@@ -3,14 +3,14 @@ package com.example.database_final_javafx.controller;
 import com.example.database_final_javafx.DAO.AuthorDAO;
 import com.example.database_final_javafx.DAO.BookDAO;
 import com.example.database_final_javafx.MainApplication;
-import com.example.database_final_javafx.entity.Book;
 import com.example.database_final_javafx.entity.Author;
+import com.example.database_final_javafx.entity.Book;
 import com.example.database_final_javafx.utils.AlertUtils;
 import com.example.database_final_javafx.utils.InputFormatter;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.util.converter.IntegerStringConverter;
 
 import java.io.IOException;
 import java.net.URL;
@@ -19,7 +19,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class AddBookController implements Initializable {
+public class EditBookController implements Initializable {
 
     @FXML
     private ComboBox<String> authorComboBox;
@@ -33,38 +33,46 @@ public class AddBookController implements Initializable {
     private TextField stockField;
     @FXML
     private CheckBox availableCheckBox;
-
     @FXML
     private Label errorMessageLabelAddBook;
-
     private Connection connection;
-    private AuthorDAO authorDAO;
     private BookDAO bookDAO;
-
+    private AuthorDAO authorDAO;
     private MainApplication mainApplication;
 
+    private Long bookId;
 
-    public AddBookController(Connection connection, MainApplication mainApplication) {
+
+    public EditBookController(Connection connection, MainApplication mainApplication, Long bookId) {
         this.connection = connection;
-        this.authorDAO = new AuthorDAO(connection);
         this.bookDAO = new BookDAO(connection);
+        this.authorDAO = new AuthorDAO(connection);
         this.mainApplication = mainApplication;
-
+        this.bookId = bookId;
     }
 
     @FXML
     public void initialize(URL url, ResourceBundle resourceBundle)  {
-        // Populate authorComboBox with author names from the database
-        List<Author> authors = null;
+        String authorName;
+        Book book;
+        List<Author> authors;
         try {
+            book = bookDAO.findById(bookId);
+            authorName = authorDAO.findById(book.getAuthorId()).getName();
             authors = authorDAO.findAll();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
-
         priceField.setTextFormatter(InputFormatter.createIntegerInputFormatter());
         stockField.setTextFormatter(InputFormatter.createIntegerInputFormatter());
+
+        authorComboBox.setValue(authorName);
+        titleField.setText(book.getTitle());
+        descriptionField.setText(book.getDescription());
+        priceField.setText(Integer.toString(book.getPrice()));
+        stockField.setText(Integer.toString(book.getStockQuantity()));
+        availableCheckBox.setSelected(book.getIsAvailable());
 
         errorMessageLabelAddBook.setVisible(false);
 
@@ -76,7 +84,7 @@ public class AddBookController implements Initializable {
 
 
     @FXML
-    private void handleAddBook() throws SQLException, IOException {
+    public void handleSaveEditedBook(ActionEvent actionEvent) throws SQLException, IOException {
 
         String titleFieldText = titleField.getText();
         String descriptionFieldText = descriptionField.getText();
@@ -90,7 +98,7 @@ public class AddBookController implements Initializable {
             errorMessageLabelAddBook.setVisible(false);
         }
 
-        // Get form values
+
         String selectedAuthorName = authorComboBox.getValue();
         String title = titleField.getText();
         String description = descriptionField.getText();
@@ -98,29 +106,25 @@ public class AddBookController implements Initializable {
         int stockQuantity = Integer.parseInt(stockField.getText());
         boolean isAvailable = availableCheckBox.isSelected();
 
-        // Get the author_id from the selected author name
         Author selectedAuthor = authorDAO.findByName(selectedAuthorName);
         long authorId = selectedAuthor.getId();
 
-        // Create a new Book object using Lombok's builder
-        Book newBook = Book.builder()
+        Book updatedBook = Book.builder()
                 .authorId(authorId)
                 .title(title)
                 .description(description)
                 .price(price)
                 .stockQuantity(stockQuantity)
                 .isAvailable(isAvailable)
+                .id(bookId)
                 .build();
 
-        bookDAO.save(newBook);
+        bookDAO.update(updatedBook);
 
         clearForm();
-        closeAddBookForm();
+        closeEditBookForm();
 
-        AlertUtils.showAlert(Alert.AlertType.INFORMATION, "Created!", "Book added successfully");
-
-
-
+        AlertUtils.showAlert(Alert.AlertType.INFORMATION, "Updated!", "Book updated successfully");
     }
 
     private void clearForm() {
@@ -132,9 +136,8 @@ public class AddBookController implements Initializable {
         authorComboBox.getSelectionModel().clearSelection();
     }
 
-    public void closeAddBookForm() throws IOException {
-        mainApplication.closeAddBookModal();
+    public void closeEditBookForm() throws IOException {
+        mainApplication.closeEditBookModal();
     }
-
 
 }

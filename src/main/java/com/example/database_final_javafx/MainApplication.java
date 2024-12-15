@@ -1,9 +1,6 @@
 package com.example.database_final_javafx;
 
-import com.example.database_final_javafx.controller.AddBookController;
-import com.example.database_final_javafx.controller.AdminPanelController;
-import com.example.database_final_javafx.controller.LoginController;
-import com.example.database_final_javafx.controller.UserMainMenuController;
+import com.example.database_final_javafx.controller.*;
 import com.example.database_final_javafx.utils.CreateTables;
 import com.example.database_final_javafx.utils.DatabaseUtil;
 import javafx.application.Application;
@@ -23,8 +20,7 @@ public class MainApplication extends Application {
     private Connection connection;
     private Stage stage;
     private Stage addBookModalStage;
-
-
+    private Stage editBookModalStage;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -61,40 +57,6 @@ public class MainApplication extends Application {
 
     }
 
-//    private void showLoginPage() throws IOException {
-//        FXMLLoader loader = new FXMLLoader(MainApplication.class.getResource("login.fxml"));
-//        loader.setControllerFactory(type -> new LoginController(connection, this));
-//        Pane root = loader.load();
-//        Scene scene = new Scene(root);
-//        stage.setTitle("Library Management System");
-//        stage.setScene(scene);
-//        stage.show();
-//    }
-
-//    public void showBookListPage() throws IOException {
-//        FXMLLoader loader = new FXMLLoader(MainApplication.class.getResource("user-main.fxml"));
-//        loader.setControllerFactory(type -> new UserMainMenuController(connection));
-//        Pane root = loader.load();
-//        Scene scene = new Scene(root);
-//        stage.setScene(scene);
-//    }
-
-
-//    public void showAdminPage() throws IOException {
-//        FXMLLoader loader = new FXMLLoader(MainApplication.class.getResource("admin-panel.fxml"));
-//        loader.setControllerFactory(type -> new AdminPanelController(connection, this));
-//        Pane root = loader.load();
-//        Scene scene = new Scene(root);
-//        stage.setScene(scene);
-//    }
-
-//    public void showAddBookForm() throws IOException {
-//        FXMLLoader loader = new FXMLLoader(MainApplication.class.getResource("add-book.fxml"));
-//        loader.setControllerFactory(type -> new AddBookController(connection));
-//        Pane root = loader.load();
-//        Scene scene = new Scene(root);
-//        stage.setScene(scene);
-//    }
 
     public void showAddBookModal() throws IOException {
         addBookModalStage = new Stage();
@@ -118,4 +80,23 @@ public class MainApplication extends Application {
         launch();
     }
 
+    public void showEditBookModal(Long bookId) throws IOException {
+
+        editBookModalStage = new Stage();
+        editBookModalStage.initModality(Modality.WINDOW_MODAL);
+        editBookModalStage.initOwner(stage);
+        System.out.println(this);
+
+        FXMLLoader loader = new FXMLLoader(MainApplication.class.getResource("edit-book.fxml"));
+        loader.setControllerFactory(type -> new EditBookController(connection, this, bookId));
+        Pane modalPane = loader.load();
+        Scene modalScene = new Scene(modalPane, 600, 400);
+
+        editBookModalStage.setScene(modalScene);
+        editBookModalStage.showAndWait();
+    }
+
+    public void closeEditBookModal() {
+        editBookModalStage.close();
+    }
 }

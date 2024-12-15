@@ -5,18 +5,18 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class BookSalesDTO {
+public class AuthorDTO {
     private Long id;
-    private Long authorId;
-    private String title;
-    private String description;
-    private Integer price;
-    private Integer stockQuantity;
-    private Boolean isAvailable;
-    private Integer totalQuantitySold;
+    private String name;
+    private Integer totalSales;
     private Integer totalRevenue;
+    private Integer totalBooks;
+    private Integer totalAvailableBooks;
 }

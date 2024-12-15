@@ -39,7 +39,7 @@ public class UserDAO extends GenericDao<User> {
 
     @Override
     protected String generateInsertSQL(User user) {
-        return "insert into user () values ()";
+        return "INSERT INTO " + getTableName() + "() VALUES ()";
     }
 
     @Override
