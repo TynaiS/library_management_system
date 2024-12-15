@@ -52,6 +52,32 @@ public class BookDAO extends GenericDao<Book> {
         }
     }
 
+    public List<Book> findBooksOwnedByUser(Long userId) throws Exception {
+        String sql = "select distinct b.id, b.author_id, b.description, b.price, b.stock_quantity, b.title from book b inner join orders o on b.id = o.book_id where o.user_id = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setLong(1, userId);
+            ResultSet rs = statement.executeQuery();
+
+            List<Book> books = new ArrayList<>();
+            while (rs.next()) {
+                Book book = mapResultSetToEntity(rs);
+                books.add(book);
+            }
+            return books;
+        }
+    }
+
+    public void updateBooksQuantity(Long bookId, int newQuantity) throws SQLException {
+        String sql = "update book set stock_quantity = ? where id = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setLong(1, newQuantity);
+            statement.setLong(2, bookId);
+            statement.executeUpdate();
+        }
+    }
+
     @Override
     protected String getTableName() {
         return "book";

@@ -1,19 +1,18 @@
 package com.example.database_final_javafx.controller;
+
 import com.example.database_final_javafx.DAO.AuthorDAO;
 import com.example.database_final_javafx.DAO.BookDAO;
 import com.example.database_final_javafx.DAO.OrderDAO;
 import com.example.database_final_javafx.DTO.BooksOwnedByUserDTO;
-import com.example.database_final_javafx.MainApplication;
 import com.example.database_final_javafx.MainController;
 import com.example.database_final_javafx.entity.Book;
-import com.example.database_final_javafx.entity.User;
 import com.example.database_final_javafx.utils.UserSession;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.layout.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import lombok.NoArgsConstructor;
 
 import java.io.IOException;
@@ -25,14 +24,12 @@ import java.util.ResourceBundle;
 
 
 @NoArgsConstructor
-public class UserMainMenuController implements Initializable {
+public class UserLibraryController implements Initializable {
     private BookDAO bookDAO;
     private AuthorDAO authorDAO;
 
     private OrderDAO orderDAO;
     private BookController bookController;
-
-    private MainApplication mainApplication;
 
     private MainController mainController;
 
@@ -40,15 +37,14 @@ public class UserMainMenuController implements Initializable {
     private GridPane bookGrid;
 
     @FXML
-    private Button goToLibrary;
+    private Button goToMainPage;
 
-    public UserMainMenuController(Connection connection, MainController mainController, MainApplication mainApplication) {
+    public UserLibraryController(Connection connection, MainController mainController) {
         this.bookDAO = new BookDAO(connection);
         this.authorDAO = new AuthorDAO(connection);
         this.orderDAO = new OrderDAO(connection);
         this.bookController = new BookController(connection);
         this.mainController = mainController;
-        this.mainApplication = mainApplication;
     }
 
     @Override
@@ -65,7 +61,7 @@ public class UserMainMenuController implements Initializable {
         try {
             for (int i = 0; i < books.size(); i++) {
                 FXMLLoader fxmlLoader = new FXMLLoader();
-                fxmlLoader.setLocation(getClass().getResource("/com/example/database_final_javafx/book-item.fxml"));
+                fxmlLoader.setLocation(getClass().getResource("/com/example/database_final_javafx/book-item-library.fxml"));
 
                 AnchorPane anchorPane = fxmlLoader.load();
 
@@ -73,8 +69,7 @@ public class UserMainMenuController implements Initializable {
 
                 itemController.setOrderDAO(orderDAO);
                 itemController.setBookDAO(bookDAO);
-                itemController.setData(getBooksAuthor( books.get(i).getAuthorId()), books.get(i), getCountOfOwnedBook(booksOwnedByUser, books.get(i).getId()) );
-                itemController.setMainApplication(mainApplication);
+                itemController.setData(getBooksAuthor(books.get(i).getAuthorId()), books.get(i), getCountOfOwnedBook(booksOwnedByUser, books.get(i).getId()));
 
                 if (column == 4) {
                     column = 0;
@@ -91,9 +86,9 @@ public class UserMainMenuController implements Initializable {
     }
 
     @FXML
-    private void handleGoToLibrary() {
+    private void handleGoToMainPage() {
         try {
-            mainController.loadUserLibrary();
+            this.mainController.loadUserPage();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -101,8 +96,10 @@ public class UserMainMenuController implements Initializable {
 
     private List<Book> loadBooks() {
         try {
-            return bookDAO.findAll();
+            return bookDAO.findBooksOwnedByUser(UserSession.getUser().getId());
         } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;

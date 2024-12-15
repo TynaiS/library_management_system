@@ -1,17 +1,12 @@
 package com.example.database_final_javafx;
 
-import com.example.database_final_javafx.controller.AddBookController;
-import com.example.database_final_javafx.controller.AdminPanelController;
-import com.example.database_final_javafx.controller.LoginController;
-import com.example.database_final_javafx.controller.UserMainMenuController;
-import com.example.database_final_javafx.utils.CreateTables;
+import com.example.database_final_javafx.controller.*;
 import com.example.database_final_javafx.utils.DatabaseUtil;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -23,6 +18,8 @@ public class MainApplication extends Application {
     private Connection connection;
     private Stage stage;
     private Stage addBookModalStage;
+
+    private Stage buyBookModalStage;
 
 
 
@@ -36,9 +33,6 @@ public class MainApplication extends Application {
             return; // If connection fails, return early and don't proceed
         }
 
-//        CreateTables createTables = new CreateTables(connection);
-//        createTables.create();
-
         this.stage = stage;
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("main-view.fxml"));
@@ -50,6 +44,7 @@ public class MainApplication extends Application {
         MainController mainController = loader.getController();
         FXMLLoader loginLoader = new FXMLLoader(MainApplication.class.getResource("login.fxml"));
         loginLoader.setControllerFactory(type -> new LoginController(connection, this));
+        System.out.println("set login controller");
         Pane loginPage = loginLoader.load();
         LoginController loginController = loginLoader.getController();
         loginController.setMainController(mainController);
@@ -57,8 +52,6 @@ public class MainApplication extends Application {
         mainController.setContent(loginPage);
 
         stage.show();
-
-
     }
 
 //    private void showLoginPage() throws IOException {
@@ -112,6 +105,24 @@ public class MainApplication extends Application {
 
     public void closeAddBookModal() {
         addBookModalStage.close();
+    }
+
+    public void showBuyBookModal(Long bookId, int amount) throws IOException {
+        buyBookModalStage = new Stage();
+        buyBookModalStage.initModality(Modality.WINDOW_MODAL);
+        buyBookModalStage.initOwner(stage);
+
+        FXMLLoader loader = new FXMLLoader(MainApplication.class.getResource("user-buy-book.fxml"));
+        loader.setControllerFactory(type -> new UserBuyBookController(connection, bookId, amount));
+        Pane modalPane = loader.load();
+        Scene modalScene = new Scene(modalPane, 400, 175);
+
+        buyBookModalStage.setScene(modalScene);
+        buyBookModalStage.showAndWait();
+    }
+
+    public void closeBuyBookModal() {
+        buyBookModalStage.close();
     }
 
     public static void main(String[] args) {

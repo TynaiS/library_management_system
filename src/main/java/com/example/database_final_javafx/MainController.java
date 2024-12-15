@@ -2,6 +2,7 @@ package com.example.database_final_javafx;
 
 import com.example.database_final_javafx.controller.AddBookController;
 import com.example.database_final_javafx.controller.AdminPanelController;
+import com.example.database_final_javafx.controller.UserLibraryController;
 import com.example.database_final_javafx.controller.UserMainMenuController;
 import com.example.database_final_javafx.utils.DatabaseUtil;
 import com.example.database_final_javafx.utils.UserSession;
@@ -22,6 +23,9 @@ public class MainController {
 
     @FXML
     private StackPane contentPane;
+
+    @FXML
+    private Button logoutButton;
 
     private Connection connection;
 
@@ -50,13 +54,15 @@ public class MainController {
     }
 
     public void loadUserPage() throws IOException {
+        logoutButton.setVisible(true);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("user-main.fxml"));
-        loader.setControllerFactory(type -> new UserMainMenuController(connection));
+        loader.setControllerFactory(type -> new UserMainMenuController(connection, this, mainApplication));
         Pane bookListPage = loader.load();
         setContent(bookListPage);
     }
 
     public void loadAdminPage() throws IOException {
+        logoutButton.setVisible(true);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("admin-panel.fxml"));
         loader.setControllerFactory(type -> new AdminPanelController(connection, mainApplication));
         Pane adminPage = loader.load();
@@ -69,6 +75,13 @@ public class MainController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
         Pane loginPage = loader.load();
         setContent(loginPage);
+    }
+
+    public void loadUserLibrary() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("user-library.fxml"));
+        loader.setControllerFactory(type -> new UserLibraryController(connection, this));
+        Pane bookListPage = loader.load();
+        setContent(bookListPage);
     }
 
     public void setContent(Pane page) {

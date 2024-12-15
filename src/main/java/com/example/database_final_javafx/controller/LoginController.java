@@ -58,8 +58,6 @@ public class LoginController {
 
 
         User user = userDAO.findByUsernameAndPassword(username, password);
-        System.out.println("test");
-
 
 
         if (user != null) {

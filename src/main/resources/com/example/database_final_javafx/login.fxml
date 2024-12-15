@@ -4,23 +4,29 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.database_final_javafx.controller.LoginController">
+<AnchorPane prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.database_final_javafx.controller.LoginController">
    <children>
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-      <Text layoutX="277.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login" wrappingWidth="46.13671875">
+      <Text layoutX="148.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login" wrappingWidth="46.13671875">
          <font>
             <Font size="18.0" />
          </font>
       </Text>
-      <TextField fx:id="usernameField" layoutX="373.0" layoutY="100.0" />
-      <PasswordField fx:id="passwordField" layoutX="373.0" layoutY="158.0" />
-      <Label layoutX="87.0" layoutY="104.0" text="Login" />
-      <Label layoutX="88.0" layoutY="162.0" text="Password" />
-      <Button fx:id="loginButton" layoutX="267.0" layoutY="219.0" mnemonicParsing="false" onAction="#handleLogin" prefHeight="26.0" prefWidth="59.0" text="Login" />
-      <Button fx:id="registerButton" layoutX="267.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleRegister" text="Register" />
+      <TextField fx:id="usernameField" layoutX="202.0" layoutY="121.0" />
+      <PasswordField fx:id="passwordField" layoutX="201.0" layoutY="197.0" />
+      <Label layoutX="64.0" layoutY="125.0" text="Login" />
+      <Label layoutX="64.0" layoutY="201.0" text="Password" />
+      <Button fx:id="loginButton" layoutX="142.0" layoutY="265.0" mnemonicParsing="false" onAction="#handleLogin" prefHeight="26.0" prefWidth="59.0" text="Login" />
+      <Button fx:id="registerButton" layoutX="142.0" layoutY="323.0" mnemonicParsing="false" onAction="#handleRegister" text="Register" />
+      <ImageView fitHeight="400.0" fitWidth="333.0" layoutX="367.0" layoutY="60.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../img/login.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

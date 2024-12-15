@@ -6,9 +6,9 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.StackPane?>
 
-<AnchorPane prefHeight="512.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.database_final_javafx.controller.UserMainMenuController">
+<AnchorPane prefHeight="512.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.database_final_javafx.controller.UserLibraryController">
     <children>
-      <Button fx:id="goToLibrary" layoutY="14.0" mnemonicParsing="false" onAction="#handleGoToLibrary" text="Go To Personal Library" />
+        <Button fx:id="goToMainPage" layoutY="14.0" mnemonicParsing="false" onAction="#handleGoToMainPage" text="Go To Main Page" />
         <ScrollPane layoutY="48.0" prefHeight="464.0" prefWidth="700.0">
             <content>
                 <!-- Wrapping GridPane in StackPane -->
