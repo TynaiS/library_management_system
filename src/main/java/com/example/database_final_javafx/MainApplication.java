@@ -43,11 +43,9 @@ public class MainApplication extends Application {
 
         MainController mainController = loader.getController();
         FXMLLoader loginLoader = new FXMLLoader(MainApplication.class.getResource("login.fxml"));
-        loginLoader.setControllerFactory(type -> new LoginController(connection, this));
+        loginLoader.setControllerFactory(type -> new LoginController(connection, mainController));
         System.out.println("set login controller");
         Pane loginPage = loginLoader.load();
-        LoginController loginController = loginLoader.getController();
-        loginController.setMainController(mainController);
 
         mainController.setContent(loginPage);
 

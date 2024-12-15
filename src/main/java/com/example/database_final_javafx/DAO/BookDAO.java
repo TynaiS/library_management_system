@@ -88,7 +88,7 @@ public class BookDAO extends GenericDao<Book> {
     }
 
     public List<Book> findBooksOwnedByUser(Long userId) throws Exception {
-        String sql = "select distinct b.id, b.author_id, b.description, b.price, b.stock_quantity, b.title from books b inner join orders o on b.id = o.book_id where o.user_id = ?";
+        String sql = "select distinct b.id, b.author_id, b.description, b.price, b.stock_quantity, b.title, b.is_available from books b inner join orders o on b.id = o.book_id where o.user_id = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setLong(1, userId);

@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -80,7 +81,9 @@ public class UserLibraryController implements Initializable {
             }
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (SQLException e) {
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
@@ -96,7 +99,11 @@ public class UserLibraryController implements Initializable {
 
     private List<Book> loadBooks() {
         try {
-            return bookDAO.findBooksOwnedByUser(UserSession.getUser().getId());
+            List<Book> books = bookDAO.findBooksOwnedByUser(UserSession.getUser().getId());
+            if (books == null) {
+                return Collections.emptyList();
+            }
+            return books;
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (Exception e) {

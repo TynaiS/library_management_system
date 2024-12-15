@@ -1,9 +1,6 @@
 package com.example.database_final_javafx;
 
-import com.example.database_final_javafx.controller.AddBookController;
-import com.example.database_final_javafx.controller.AdminPanelController;
-import com.example.database_final_javafx.controller.UserLibraryController;
-import com.example.database_final_javafx.controller.UserMainMenuController;
+import com.example.database_final_javafx.controller.*;
 import com.example.database_final_javafx.utils.DatabaseUtil;
 import com.example.database_final_javafx.utils.UserSession;
 import javafx.fxml.FXML;
@@ -73,6 +70,7 @@ public class MainController {
         logoutButton.setVisible(false);
         UserSession.clearUser();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
+        loader.setControllerFactory(type -> new LoginController(connection, this));
         Pane loginPage = loader.load();
         setContent(loginPage);
     }

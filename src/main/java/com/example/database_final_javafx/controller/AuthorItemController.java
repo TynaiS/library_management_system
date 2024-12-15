@@ -30,20 +30,13 @@ public class AuthorItemController{
 
     private BookDAO bookDAO;
 
-    public void setData(MainApplication mainApplication, String name, Integer author, String description, String title, Integer price, Integer totalQuantitySold, Integer totalRevenue, Integer stockQuantity, Boolean availability) {
+    public void setData(MainApplication mainApplication, String name, Integer totalSales,  Integer totalRevenue, Integer totalBooks, Integer totalAvailableBooks) {
+        this.mainApplication = mainApplication;
+        this.nameLabel.setText(name);
+        this.totalSalesLabel.setText("Total sales: " + totalSales);
+        this.totalRevenueLabel.setText("Total revenue: $" + totalRevenue);
+        this.totalBooksLabel.setText("Total num of books" + totalBooks);
+        this.totalAvailableBooksLabel.setText("Total num of available books: " + totalAvailableBooks);
 
-        this.stockQuantityLabel.setText("Stock quantity: " + stockQuantity);
-        this.availabilityLabel.setText("Is available: " + (availability ? "Yes" : "No"));
-        Image image = new Image(getClass().getResourceAsStream("/img/it.jpg"));
-        this.image.setImage(image);
-
-        this.image.setFitWidth(150); // Adjust width as needed
-        this.image.setPreserveRatio(true); // Maintain aspect ratio
-        this.authorLabel.setWrapText(true); // Wrap text for long descriptions
-        this.descriptionLabel.setWrapText(true);
-    }
-
-    public void openEditBookModal(ActionEvent actionEvent) throws IOException {
-        mainApplication.showEditBookModal(bookId);
     }
 }
