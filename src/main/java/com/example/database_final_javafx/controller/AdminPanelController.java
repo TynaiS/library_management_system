@@ -203,7 +203,7 @@ public class AdminPanelController implements Initializable{
     @FXML
     public void getTopWorstSellingBooks() throws Exception {
         if (booksInputChecker()) {
-            List<BookSalesDTO> books = bookDAO.getTopWorstSellingBooks(Integer.parseInt(topNInputAuthors.getText()));
+            List<BookSalesDTO> books = bookDAO.getTopWorstSellingBooks(Integer.parseInt(topNInput.getText()));
             updateBookGrid(books);
         }
     }

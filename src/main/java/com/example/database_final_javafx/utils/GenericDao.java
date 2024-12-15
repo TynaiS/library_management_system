@@ -20,7 +20,16 @@ public abstract class GenericDao<T> {
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             setInsertParameters(stmt, entity);
             System.out.println(stmt);
-            stmt.executeUpdate();
+            int rows = stmt.executeUpdate();
+            if (rows > 0) {
+                ResultSet generatedKeys = stmt.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    long insertId = generatedKeys.getLong(1);
+                    System.out.println("Record inserted successfully with ID: " + insertId);
+                } else {
+                    System.out.println("Failed to retrieve insert ID.");
+                }
+            }
         }
     }
 
