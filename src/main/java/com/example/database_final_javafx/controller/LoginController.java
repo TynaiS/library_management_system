@@ -19,17 +19,13 @@ import lombok.NoArgsConstructor;
 import java.io.IOException;
 import java.sql.Connection;
 
+import static com.example.database_final_javafx.utils.AlertUtils.showAlert;
+
 @NoArgsConstructor
 public class LoginController {
-
     private MainController mainController;
 
-    public void setMainController(MainController mainController) {
-        this.mainController = mainController;
-    }
-
     private UserDAO userDAO;
-    private MainApplication mainApplication;
 
     @FXML
     private TextField usernameField;
@@ -42,15 +38,13 @@ public class LoginController {
 
     @FXML
     private Button registerButton;
-    public LoginController(Connection connection, MainApplication mainApplication) {
+    public LoginController(Connection connection, MainController mainController) {
         this.userDAO = new UserDAO(connection);
-        this.mainApplication = mainApplication;
+        this.mainController = mainController;
     }
 
     @FXML
     private void handleLogin(ActionEvent event) throws IOException {
-        mainController.loadAdminPage();
-
         String username = usernameField.getText();
         String password = passwordField.getText();
 
@@ -61,9 +55,6 @@ public class LoginController {
 
 
         User user = userDAO.findByUsernameAndPassword(username, password);
-        System.out.println("test");
-
-
 
         if (user != null) {
             UserSession.setUser(user);

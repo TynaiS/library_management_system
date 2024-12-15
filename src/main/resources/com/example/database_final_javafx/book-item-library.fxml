@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="340.0" prefWidth="161.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.database_final_javafx.controller.BookItemController">
+   <children>
+      <ImageView fx:id="image" fitHeight="204.0" fitWidth="161.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../img/it.jpg" />
+         </image>
+      </ImageView>
+      <Label fx:id="descriptionLabel" alignment="TOP_LEFT" layoutX="9.0" layoutY="264.0" prefHeight="41.0" prefWidth="146.0" text="Description" />
+      <Label fx:id="authorLabel" layoutX="10.0" layoutY="240.0" text="Author" />
+      <Label layoutX="9.0" layoutY="307.0" prefHeight="18.0" prefWidth="127.0" text="You have items:" />
+      <Label fx:id="bookItemsLabel" layoutX="125.0" layoutY="307.0" prefHeight="18.0" prefWidth="23.0" style="-fx-alignment: CENTER_RIGHT;" textAlignment="RIGHT" />
+      <Button fx:id="buyButton" layoutX="8.0" layoutY="303.0" mnemonicParsing="false" onAction="#handleBuy" prefHeight="26.0" prefWidth="146.0" text="Buy" visible="false" />
+      <Label layoutX="9.0" layoutY="307.0" prefHeight="18.0" prefWidth="127.0" text="Items available:" visible="false" />
+      <Label fx:id="bookItemsAvailableLabel" layoutX="125.0" layoutY="307.0" prefHeight="18.0" prefWidth="23.0" textAlignment="RIGHT" visible="false" />
+   </children>
+</AnchorPane>

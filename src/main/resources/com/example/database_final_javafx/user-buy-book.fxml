@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.text.Font?>
+<AnchorPane prefHeight="175.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.database_final_javafx.controller.UserBuyBookController">
+    <children>
+        <Label layoutX="160.0" layoutY="14.0" text="Buy Book">
+            <font>
+                <Font name="System Bold" size="18.0" />
+            </font>
+        </Label>
+        <TextField fx:id="quantityField" layoutX="237.0" layoutY="72.0" />
+        <Label layoutX="14.0" layoutY="76.0" text="Quantity of booos" />
+        <Button layoutX="183.0" layoutY="135.0" mnemonicParsing="false" onAction="#handleBuy" text="Buy" />
+    </children>
+</AnchorPane>

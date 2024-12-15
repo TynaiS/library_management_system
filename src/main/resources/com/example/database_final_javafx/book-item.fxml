@@ -6,17 +6,19 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="385.0" prefWidth="106.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.database_final_javafx.controller.BookItemController">
+<AnchorPane prefHeight="401.0" prefWidth="161.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.database_final_javafx.controller.BookItemController">
    <children>
-      <ImageView fx:id="image" fitHeight="204.0" fitWidth="166.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="image" fitHeight="204.0" fitWidth="161.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../../../img/it.jpg" />
          </image>
       </ImageView>
       <Label fx:id="descriptionLabel" alignment="TOP_LEFT" layoutX="9.0" layoutY="264.0" prefHeight="41.0" prefWidth="146.0" text="Description" />
       <Label fx:id="authorLabel" layoutX="10.0" layoutY="240.0" text="Author" />
-      <Button fx:id="buyButton" layoutX="5.0" layoutY="316.0" mnemonicParsing="false" onAction="#handleBuy" prefHeight="26.0" prefWidth="156.0" text="Buy" />
+      <Button fx:id="buyButton" layoutX="5.0" layoutY="316.0" mnemonicParsing="false" onAction="#handleBuy" prefHeight="26.0" prefWidth="146.0" text="Buy" />
       <Label layoutX="9.0" layoutY="353.0" prefHeight="18.0" prefWidth="127.0" text="You have items:" />
-      <Label fx:id="bookItemsLabel" layoutX="136.0" layoutY="353.0" prefHeight="18.0" prefWidth="23.0" textAlignment="RIGHT" />
+      <Label fx:id="bookItemsLabel" layoutX="125.0" layoutY="353.0" prefHeight="18.0" prefWidth="23.0" style="-fx-alignment: CENTER_RIGHT;" textAlignment="RIGHT" />
+      <Label layoutX="9.0" layoutY="371.0" prefHeight="18.0" prefWidth="127.0" text="Items available:" />
+      <Label fx:id="bookItemsAvailableLabel" layoutX="125.0" layoutY="371.0" prefHeight="18.0" prefWidth="23.0" style="-fx-alignment: CENTER_RIGHT;" textAlignment="RIGHT" />
    </children>
 </AnchorPane>

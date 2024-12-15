@@ -1,10 +1,13 @@
 package com.example.database_final_javafx.DAO;
 
+import com.example.database_final_javafx.DTO.BookSalesDTO;
 import com.example.database_final_javafx.DTO.BooksOwnedByUserDTO;
+import com.example.database_final_javafx.entity.Book;
 import com.example.database_final_javafx.entity.Order;
 import com.example.database_final_javafx.utils.GenericDao;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +21,7 @@ public class OrderDAO extends GenericDao<Order> {
 
     public List<BooksOwnedByUserDTO> findBookIDsOwnedByUser (Long userId) {
         List<BooksOwnedByUserDTO> result = new ArrayList<>();
-        String sql = "select book_id, user_id, count(*) as owned_books_count from " + getTableName() + " where user_id = ? group by book_id, user_id";
+        String sql = "select book_id, user_id, sum(quantity) as owned_books_count from " + getTableName() + " where user_id = ? group by book_id, user_id";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setLong(1, userId);
             ResultSet rs = stmt.executeQuery();
@@ -35,6 +38,21 @@ public class OrderDAO extends GenericDao<Order> {
         return result;
     }
 
+    public int getBookQuantityOwnedByUser (Long userId, Long bookId) {
+        int result = 0;
+        String sql = "select sum(quantity) as total_quantity from " + getTableName() + " where user_id = ? and book_id = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setLong(1, userId);
+            stmt.setLong(2, bookId);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                result = result + rs.getInt("total_quantity");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 
 
     public Integer countAllBooks() {
@@ -62,8 +80,6 @@ public class OrderDAO extends GenericDao<Order> {
         }
         return 0;
     }
-
-
 
     @Override
     protected String getTableName() {
