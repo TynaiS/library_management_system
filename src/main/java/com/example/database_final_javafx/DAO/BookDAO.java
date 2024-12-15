@@ -80,7 +80,7 @@ public class BookDAO extends GenericDao<Book> {
 
     @Override
     protected String getTableName() {
-        return "book";
+        return "books";
     }
 
     @Override

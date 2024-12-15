@@ -10,7 +10,7 @@ public class AuthorDAO extends GenericDao<Author> {
 
     @Override
     protected String getTableName() {
-        return "author";
+        return "authors";
     }
 
     @Override
