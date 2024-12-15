@@ -49,13 +49,12 @@ public class LoginController {
         String password = passwordField.getText();
 
         if (username.isEmpty() || password.isEmpty()) {
-            showAlert(Alert.AlertType.ERROR, "Login Failed", "Please enter both username and password.");
+            AlertUtils.showAlert(Alert.AlertType.ERROR, "Login Failed", "Please enter both username and password.");
             return;
         }
 
 
         User user = userDAO.findByUsernameAndPassword(username, password);
-
 
         if (user != null) {
             UserSession.setUser(user);
@@ -65,7 +64,7 @@ public class LoginController {
                 mainController.loadUserPage();
             }
         } else {
-            showAlert(Alert.AlertType.ERROR, "Login Failed", "Invalid credentials. Please try again.");
+            AlertUtils.showAlert(Alert.AlertType.ERROR, "Login Failed", "Invalid credentials. Please try again.");
         }
     }
 

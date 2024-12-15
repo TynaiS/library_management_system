@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<?import javafx.scene.control.Button?>
+<AnchorPane style="-fx-border-color: black; -fx-border-width: 2;" prefHeight="154.0" prefWidth="154.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.database_final_javafx.controller.AuthorItemController">
+    <children>
+
+        <Label fx:id="nameLabel" alignment="TOP_LEFT" layoutX="14.0" layoutY="155.0" prefHeight="41.0" prefWidth="146.0" text="Name" />
+
+        <Label fx:id="totalSalesLabel" alignment="TOP_LEFT" layoutX="14.0" layoutY="195.0" prefHeight="41.0" prefWidth="146.0" text="Total sales: " />
+
+        <Label fx:id="totalRevenueLabel" layoutX="14.0" layoutY="235.0" text="Total revenue: $" />
+
+        <Label fx:id="totalBooksLabel" layoutX="14.0" layoutY="255.0" text="Total num of books" />
+
+        <Label fx:id="totalAvailableBooksLabel" layoutX="14.0" layoutY="275.0" text="Total num of available books" />
+
+    </children>
+</AnchorPane>

@@ -46,7 +46,7 @@
                 <Button text="Close Books List" onAction="#closeBooksList" />
                 <Label fx:id="errorMessageLabelBooks" textFill="red" visible="false"/>
             </HBox>
-            <ScrollPane fx:id="bookTopSalesScroll" prefWidth="758.0" prefHeight="327.0">
+            <ScrollPane fx:id="bookTopSalesScroll" visible="false" prefWidth="758.0" prefHeight="327.0">
                 <content>
                     <GridPane fx:id="bookGrid">
                         <columnConstraints>
@@ -78,7 +78,7 @@
                 <Label text="Add new author" />
                 <TextField fx:id="newAuthorNameField" prefWidth="200.0"/>
                 <Button text="Add author" onAction="#addAuthor" />
-                <Label fx:id="errorMessageLabelAuthor" textFill="red" visible="false"/>
+                <Label fx:id="errorMessageLabelNewAuthor" textFill="red" visible="false"/>
             </HBox>
 
             <HBox spacing="10" alignment="CENTER_LEFT">
@@ -91,7 +91,16 @@
                 <Button fx:id="refreshAuthorsButton" text="Refresh" onAction="#refreshAuthorsNum"/>
             </HBox>
 
-            <ScrollPane fx:id="authorsScroll" prefWidth="758.0" prefHeight="327.0">
+            <Label text="1) Enter the number of books(N) and choose one of the options: " />
+            <HBox spacing="10">
+                <TextField fx:id="topNInputAuthors" promptText="Enter a number" prefWidth="150" />
+                <Button text="Get Top N Best-Selling Authors" onAction="#getTopBestSellingAuthors" />
+                <Button text="Get Top N Worst-Selling Authors" onAction="#getTopWorstSellingAuthors" />
+                <Button text="Close Authors List" onAction="#closeAuthorsList" />
+                <Label fx:id="errorMessageLabelAuthors" textFill="red" visible="false"/>
+            </HBox>
+
+            <ScrollPane fx:id="authorsScroll" visible="false" prefWidth="758.0" prefHeight="327.0">
                 <content>
                     <GridPane fx:id="authorsGrid">
                         <columnConstraints>
