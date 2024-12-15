@@ -12,109 +12,113 @@
 <?import javafx.geometry.Insets?>
 <VBox fx:id="adminPanelVBox" prefWidth="788.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.database_final_javafx.controller.AdminPanelController">
     <children>
-        <!-- BOOKS Section -->
-        <HBox spacing="10" alignment="CENTER_LEFT">
-            <VBox.margin>
-                <Insets top="30"/>
-            </VBox.margin>
-            <Label text="BOOKS"/>
-        </HBox>
-
-        <HBox spacing="10" alignment="CENTER_LEFT">
-            <Button text="Add book" onAction="#openAddBookForm" />
-        </HBox>
-
-        <HBox spacing="10" alignment="CENTER_LEFT">
+        <ScrollPane>
             <VBox>
-                <Label fx:id="totalBooksNumLabel" text="Total number of books: "/>
-                <Label fx:id="availableBooksNumLabel" text="Total number available of books: "/>
-                <Label fx:id="totalBooksRevenueLabel" text="Total books revenue: $"/>
-            </VBox>
-            <Button fx:id="refreshBooksButton" text="Refresh" onAction="#refreshBooksNum"/>
-        </HBox>
+                <!-- BOOKS Section -->
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <VBox.margin>
+                        <Insets top="30"/>
+                    </VBox.margin>
+                    <Label text="BOOKS"/>
+                </HBox>
 
-        <!-- Enter the number of books Section -->
-        <VBox spacing="10">
-            <VBox.margin>
-                <Insets top="20"/>
-            </VBox.margin>
-            <Label text="1) Enter the number of books(N) and choose one of the options: " />
-            <HBox spacing="10">
-                <TextField fx:id="topNInput" promptText="Enter a number" prefWidth="150" />
-                <Button text="Get Top N Best-Selling Books" onAction="#getTopBestSellingBooks" />
-                <Button text="Get Top N Worst-Selling Books" onAction="#getTopWorstSellingBooks" />
-                <Button text="Close Books List" onAction="#closeBooksList" />
-                <Label fx:id="errorMessageLabelBooks" textFill="red" visible="false"/>
-            </HBox>
-            <ScrollPane fx:id="bookTopSalesScroll" visible="false" prefWidth="758.0" prefHeight="327.0">
-                <content>
-                    <GridPane fx:id="bookGrid">
-                        <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                        </columnConstraints>
-                        <rowConstraints>
-                            <RowConstraints/>
-                            <RowConstraints/>
-                            <RowConstraints/>
-                        </rowConstraints>
-                    </GridPane>
-                </content>
-            </ScrollPane>
-        </VBox>
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Button text="Add book" onAction="#openAddBookForm" />
+                </HBox>
 
-        <!-- Book Top Sales Scroll Section -->
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <VBox>
+                        <Label fx:id="totalBooksNumLabel" text="Total number of books: "/>
+                        <Label fx:id="availableBooksNumLabel" text="Total number available of books: "/>
+                        <Label fx:id="totalBooksRevenueLabel" text="Total books revenue: $"/>
+                    </VBox>
+                    <Button fx:id="refreshBooksButton" text="Refresh" onAction="#refreshBooksNum"/>
+                </HBox>
 
-
-        <!-- AUTHORS Section -->
-        <VBox fx:id="authorsSection">
-            <HBox spacing="10" alignment="CENTER_LEFT">
-                <VBox.margin>
-                    <Insets top="30"/>
-                </VBox.margin>
-                <Label text="AUTHORS"/>
-            </HBox>
-
-            <HBox spacing="10" alignment="CENTER_LEFT">
-                <Label text="Add new author" />
-                <TextField fx:id="newAuthorNameField" prefWidth="200.0"/>
-                <Button text="Add author" onAction="#addAuthor" />
-                <Label fx:id="errorMessageLabelNewAuthor" textFill="red" visible="false"/>
-            </HBox>
-
-            <HBox spacing="10" alignment="CENTER_LEFT">
-                <VBox.margin>
-                    <Insets top="20"/>
-                </VBox.margin>
-                <VBox>
-                    <Label fx:id="totalAuthorsNumLabel" text="Total number of authors: "/>
+                <!-- Enter the number of books Section -->
+                <VBox spacing="10">
+                    <VBox.margin>
+                        <Insets top="20"/>
+                    </VBox.margin>
+                    <Label text="1) Enter the number of books(N) and choose one of the options: " />
+                    <HBox spacing="10">
+                        <TextField fx:id="topNInput" promptText="Enter a number" prefWidth="150" />
+                        <Button text="Get Top N Best-Selling Books" onAction="#getTopBestSellingBooks" />
+                        <Button text="Get Top N Worst-Selling Books" onAction="#getTopWorstSellingBooks" />
+                        <Button text="Close Books List" onAction="#closeBooksList" />
+                        <Label fx:id="errorMessageLabelBooks" textFill="red" visible="false"/>
+                    </HBox>
+                    <ScrollPane fx:id="bookTopSalesScroll" visible="false" prefWidth="758.0" prefHeight="327.0">
+                        <content>
+                            <GridPane fx:id="bookGrid">
+                                <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                                </columnConstraints>
+                                <rowConstraints>
+                                    <RowConstraints/>
+                                    <RowConstraints/>
+                                    <RowConstraints/>
+                                </rowConstraints>
+                            </GridPane>
+                        </content>
+                    </ScrollPane>
                 </VBox>
-                <Button fx:id="refreshAuthorsButton" text="Refresh" onAction="#refreshAuthorsNum"/>
-            </HBox>
 
-            <Label text="1) Enter the number of books(N) and choose one of the options: " />
-            <HBox spacing="10">
-                <TextField fx:id="topNInputAuthors" promptText="Enter a number" prefWidth="150" />
-                <Button text="Get Top N Best-Selling Authors" onAction="#getTopBestSellingAuthors" />
-                <Button text="Get Top N Worst-Selling Authors" onAction="#getTopWorstSellingAuthors" />
-                <Button text="Close Authors List" onAction="#closeAuthorsList" />
-                <Label fx:id="errorMessageLabelAuthors" textFill="red" visible="false"/>
-            </HBox>
+                <!-- Book Top Sales Scroll Section -->
 
-            <ScrollPane fx:id="authorsScroll" visible="false" prefWidth="758.0" prefHeight="327.0">
-                <content>
-                    <GridPane fx:id="authorsGrid">
-                        <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                        </columnConstraints>
-                        <rowConstraints>
-                            <RowConstraints/>
-                            <RowConstraints/>
-                            <RowConstraints/>
-                        </rowConstraints>
-                    </GridPane>
-                </content>
-            </ScrollPane>
-        </VBox>
+
+                <!-- AUTHORS Section -->
+                <VBox fx:id="authorsSection">
+                    <HBox spacing="10" alignment="CENTER_LEFT">
+                        <VBox.margin>
+                            <Insets top="30"/>
+                        </VBox.margin>
+                        <Label text="AUTHORS"/>
+                    </HBox>
+
+                    <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Add new author" />
+                        <TextField fx:id="newAuthorNameField" prefWidth="200.0"/>
+                        <Button text="Add author" onAction="#addAuthor" />
+                        <Label fx:id="errorMessageLabelNewAuthor" textFill="red" visible="false"/>
+                    </HBox>
+
+                    <HBox spacing="10" alignment="CENTER_LEFT">
+                        <VBox.margin>
+                            <Insets top="20"/>
+                        </VBox.margin>
+                        <VBox>
+                            <Label fx:id="totalAuthorsNumLabel" text="Total number of authors: "/>
+                        </VBox>
+                        <Button fx:id="refreshAuthorsButton" text="Refresh" onAction="#refreshAuthorsNum"/>
+                    </HBox>
+
+                    <Label text="1) Enter the number of books(N) and choose one of the options: " />
+                    <HBox spacing="10">
+                        <TextField fx:id="topNInputAuthors" promptText="Enter a number" prefWidth="150" />
+                        <Button text="Get Top N Best-Selling Authors" onAction="#getTopBestSellingAuthors" />
+                        <Button text="Get Top N Worst-Selling Authors" onAction="#getTopWorstSellingAuthors" />
+                        <Button text="Close Authors List" onAction="#closeAuthorsList" />
+                        <Label fx:id="errorMessageLabelAuthors" textFill="red" visible="false"/>
+                    </HBox>
+
+                    <ScrollPane fx:id="authorsScroll" visible="false" prefWidth="758.0" prefHeight="327.0">
+                        <content>
+                            <GridPane fx:id="authorsGrid">
+                                <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                                </columnConstraints>
+                                <rowConstraints>
+                                    <RowConstraints/>
+                                    <RowConstraints/>
+                                    <RowConstraints/>
+                                </rowConstraints>
+                            </GridPane>
+                        </content>
+                    </ScrollPane>
+                </VBox>
+            </VBox>
+        </ScrollPane>
 
     </children>
 </VBox>
