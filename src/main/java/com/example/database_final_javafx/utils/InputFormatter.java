@@ -4,29 +4,32 @@ import javafx.scene.control.TextFormatter;
 import javafx.util.converter.IntegerStringConverter;
 
 public class InputFormatter {
-    public static TextFormatter<String> createTextInputFormatter() {
-        return  new TextFormatter<>(
-                change -> {
-                    String newText = change.getControlNewText();
-                    return newText.trim().isEmpty() ? null : change;
-                });
+
+    public static Boolean areStringsEmpty(String... strings) {
+        Boolean result = false;
+        for(String string : strings){
+            if(string == null || string.trim().isEmpty()) {
+                result = true;
+            }
+        }
+        return  result;
     }
 
     public static TextFormatter<Integer> createIntegerInputFormatter() {
-        return new TextFormatter<>(new IntegerStringConverter(), 1,
+        return new TextFormatter<>(
                 change -> {
-                    // Allow only digits and ensure the number is greater than 0
                     String newText = change.getControlNewText();
-                    if (newText.matches("\\d*")) { // Allow only numeric values
-                        try {
-                            int newValue = Integer.parseInt(newText);
-                            return newValue > 0 ? change : null; // Allow only numbers > 0
-                        } catch (NumberFormatException e) {
-                            return null; // Reject invalid numbers
-                        }
-                    } else {
-                        return null; // Reject non-numeric input
+
+                    if (newText.isEmpty()) {
+                        return change;
                     }
+
+                    if (newText.matches("[1-9]\\d*")) {
+                        return change;
+                    }
+
+                    return null;
                 });
     }
+
 }

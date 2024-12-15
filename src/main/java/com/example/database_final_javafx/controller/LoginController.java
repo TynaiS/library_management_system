@@ -5,6 +5,7 @@ import com.example.database_final_javafx.DAO.UserDAO;
 import com.example.database_final_javafx.MainController;
 import com.example.database_final_javafx.entity.User;
 import com.example.database_final_javafx.utils.AccountType;
+import com.example.database_final_javafx.utils.AlertUtils;
 import com.example.database_final_javafx.utils.UserSession;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -48,8 +49,7 @@ public class LoginController {
 
     @FXML
     private void handleLogin(ActionEvent event) throws IOException {
-        String username = usernameField.getText();
-        String password = passwordField.getText();
+        mainController.loadAdminPage();
 
         if (username.isEmpty() || password.isEmpty()) {
             showAlert(Alert.AlertType.ERROR, "Login Failed", "Please enter both username and password.");
@@ -93,13 +93,5 @@ public class LoginController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    private void showAlert(Alert.AlertType alertType, String title, String message) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 }

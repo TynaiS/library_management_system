@@ -58,7 +58,7 @@ public class CreateTables {
             """;
 
         String insertAuthorsSQL = """
-            INSERT INTO author (name) VALUES
+            INSERT INTO authors (name) VALUES
                    ('J.K. Rowling'),
                    ('George Orwell'),
                    ('F. Scott Fitzgerald'),
@@ -87,7 +87,7 @@ public class CreateTables {
                 """;
 
         String insertBooksSQL = """
-                INSERT INTO book (author_id, title, description, price, stock_quantity)
+                INSERT INTO books (author_id, title, description, price, stock_quantity)
                 VALUES
                     (1, 'Harry Potter and the Philosophers Stone', 'A young wizard discovers his magical destiny.', 20, 100),
                     (1, 'Harry Potter and the Chamber of Secrets', 'Harry returns for his second year at Hogwarts and faces new dangers.', 20, 100),

@@ -54,6 +54,33 @@ public class OrderDAO extends GenericDao<Order> {
         return result;
     }
 
+
+    public Integer countAllBooks() {
+        String sql = "SELECT COUNT(*) AS total_books FROM " + getTableName();
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("total_books");
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return 0;
+    }
+
+    public Integer countTotalBooksRevenue() {
+        String sql = "SELECT COALESCE(SUM(o.total_amount), 0) AS total_revenue FROM " + getTableName() + " o";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("total_revenue");
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return 0;
+    }
+
     @Override
     protected String getTableName() {
         return "orders";
@@ -61,7 +88,7 @@ public class OrderDAO extends GenericDao<Order> {
 
     @Override
     protected String generateInsertSQL(Order entity) {
-        return "Insert into " + getTableName() + " (user_id, book_id, order_date, quantity, total_amount) values (?, ?, ?, ?, ?)";
+        return "INSERT INTO " + getTableName() + "(user_id, book_id, order_date, quantity, total_amount) VALUES (?, ?, ?, ?, ?)";
     }
 
     @Override
