@@ -51,30 +51,30 @@ public class LoginController {
     private void handleLogin(ActionEvent event) throws IOException {
         mainController.loadAdminPage();
 
-//        String username = usernameField.getText();
-//        String password = passwordField.getText();
-//
-//        if (username.isEmpty() || password.isEmpty()) {
-//            AlertUtils.showAlert(Alert.AlertType.ERROR, "Login Failed", "Please enter both username and password.");
-//            return;
-//        }
-//
-//
-//        User user = userDAO.findByUsernameAndPassword(username, password);
-//        System.out.println("test");
-//
-//
-//
-//        if (user != null) {
-//            UserSession.setUser(user);
-//            if(UserSession.getUser().getAccountType() == AccountType.ADMIN){
-//                mainController.loadAdminPage();
-//            } else {
-//                mainController.loadUserPage();
-//            }
-//        } else {
-//            AlertUtils.showAlert(Alert.AlertType.ERROR, "Login Failed", "Invalid credentials. Please try again.");
-//        }
+        String username = usernameField.getText();
+        String password = passwordField.getText();
+
+        if (username.isEmpty() || password.isEmpty()) {
+            AlertUtils.showAlert(Alert.AlertType.ERROR, "Login Failed", "Please enter both username and password.");
+            return;
+        }
+
+
+        User user = userDAO.findByUsernameAndPassword(username, password);
+        System.out.println("test");
+
+
+
+        if (user != null) {
+            UserSession.setUser(user);
+            if(UserSession.getUser().getAccountType() == AccountType.ADMIN){
+                mainController.loadAdminPage();
+            } else {
+                mainController.loadUserPage();
+            }
+        } else {
+            AlertUtils.showAlert(Alert.AlertType.ERROR, "Login Failed", "Invalid credentials. Please try again.");
+        }
     }
 
     @FXML

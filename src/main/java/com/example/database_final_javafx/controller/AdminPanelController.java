@@ -3,6 +3,7 @@ package com.example.database_final_javafx.controller;
 import com.example.database_final_javafx.DAO.AuthorDAO;
 import com.example.database_final_javafx.DAO.BookDAO;
 import com.example.database_final_javafx.DAO.OrderDAO;
+import com.example.database_final_javafx.DTO.AuthorDTO;
 import com.example.database_final_javafx.DTO.BookSalesDTO;
 import com.example.database_final_javafx.MainApplication;
 import com.example.database_final_javafx.entity.Author;
@@ -40,9 +41,6 @@ public class AdminPanelController implements Initializable{
     @FXML
     public Label totalBooksRevenueLabel;
     @FXML
-    public Label errorMessageLabelAuthor;
-
-    @FXML
     public TextField newAuthorNameField;
     @FXML
     public VBox authorsSection;
@@ -58,6 +56,12 @@ public class AdminPanelController implements Initializable{
 
     @FXML
     public GridPane authorsGrid;
+    @FXML
+    public TextField topNInputAuthors;
+    @FXML
+    public Label errorMessageLabelAuthors;
+    @FXML
+    public Label errorMessageLabelNewAuthor;
 
     @FXML
     private VBox adminPanelVBox;
@@ -95,12 +99,7 @@ public class AdminPanelController implements Initializable{
         refreshAuthorsNum();
 
         topNInput.setTextFormatter(InputFormatter.createIntegerInputFormatter());
-
-        errorMessageLabelBooks.setVisible(false);
-        errorMessageLabelAuthor.setVisible(false);
-
-        bookTopSalesScroll.setVisible(false);
-        authorsScroll.setVisible(false);
+        topNInputAuthors.setTextFormatter(InputFormatter.createIntegerInputFormatter());
     }
 
     private Boolean booksInputChecker() {
@@ -117,15 +116,29 @@ public class AdminPanelController implements Initializable{
         return result;
     }
 
-    private Boolean authorsInputChecker() {
+    private Boolean addAuthorInputChecker() {
         Boolean result = true;
         String input = newAuthorNameField.getText();
         if (InputFormatter.areStringsEmpty(input)) {
-            errorMessageLabelAuthor.setText("Input cannot be empty!");
-            errorMessageLabelAuthor.setVisible(true);
+            errorMessageLabelNewAuthor.setText("Input cannot be empty!");
+            errorMessageLabelNewAuthor.setVisible(true);
             result = false;
         } else {
-            errorMessageLabelAuthor.setVisible(false);
+            errorMessageLabelNewAuthor.setVisible(false);
+        }
+
+        return result;
+    }
+
+    private Boolean authorsInputChecker() {
+        Boolean result = true;
+        String input = topNInputAuthors.getText();
+        if (InputFormatter.areStringsEmpty(input)) {
+            errorMessageLabelAuthors.setText("Input cannot be empty!");
+            errorMessageLabelAuthors.setVisible(true);
+            result = false;
+        } else {
+            errorMessageLabelAuthors.setVisible(false);
         }
 
         return result;
@@ -190,10 +203,27 @@ public class AdminPanelController implements Initializable{
     @FXML
     public void getTopWorstSellingBooks() throws Exception {
         if (booksInputChecker()) {
-            List<BookSalesDTO> books = bookDAO.getTopWorstSellingBooks(Integer.parseInt(topNInput.getText()));
+            List<BookSalesDTO> books = bookDAO.getTopWorstSellingBooks(Integer.parseInt(topNInputAuthors.getText()));
             updateBookGrid(books);
         }
     }
+
+    @FXML
+    public void getTopBestSellingAuthors() throws Exception {
+        if (authorsInputChecker()) {
+            List<AuthorDTO> authors = authorDAO.getTopBestSellingAuthors(Integer.parseInt(topNInputAuthors.getText()));
+            updateAuthorsGrid(authors);
+        }
+    }
+
+    @FXML
+    public void getTopWorstSellingAuthors() throws Exception {
+        if (authorsInputChecker()) {
+            List<AuthorDTO> authors = authorDAO.getTopWorstSellingAuthors(Integer.parseInt(topNInputAuthors.getText()));
+            updateAuthorsGrid(authors);
+        }
+    }
+
     public void closeBooksList() {
         bookTopSalesScroll.setVisible(false);
     }
@@ -209,7 +239,7 @@ public class AdminPanelController implements Initializable{
     }
 
     public void addAuthor() throws SQLException {
-        if(authorsInputChecker()){
+        if(addAuthorInputChecker()){
             Author author = Author.builder()
                     .name(newAuthorNameField.getText())
                     .build();
@@ -226,38 +256,32 @@ public class AdminPanelController implements Initializable{
         totalAuthorsNumLabel.setText("Total number of authors: " + authorDAO.countAllAuthors());
     }
 
-    private void updateAuthorsGrid(List<BookSalesDTO> books) {
+    private void updateAuthorsGrid(List<AuthorDTO> authors) {
         authorsGrid.getChildren().clear();
         authorsScroll.setVisible(true);
         int column = 0;
         int row = 1;
-        GridPane gridPane = authorsGrid;
+            GridPane gridPane = authorsGrid;
         gridPane.getColumnConstraints().clear(); // Clear existing constraints
 
         gridPane.setHgap(10);
         gridPane.setVgap(10);
 
         try {
-            for (int i = 0; i < books.size(); i++) {
+            for (int i = 0; i < authors.size(); i++) {
                 FXMLLoader fxmlLoader = new FXMLLoader();
-                fxmlLoader.setLocation(getClass().getResource("/com/example/database_final_javafx/book-sales-item.fxml"));
+                fxmlLoader.setLocation(getClass().getResource("/com/example/database_final_javafx/author-item.fxml"));
 
                 AnchorPane anchorPane = fxmlLoader.load();
 
-                System.out.println(books.get(i).getIsAvailable());
-
-                BookSalesItemController itemController = fxmlLoader.getController();
+                AuthorItemController itemController = fxmlLoader.getController();
                 itemController.setData(
                         mainApplication,
-                        books.get(i).getId(),
-                        bookController.getBooksAuthor(books.get(i).getAuthorId()),
-                        books.get(i).getDescription(),
-                        books.get(i).getTitle(),
-                        books.get(i).getPrice(),
-                        books.get(i).getTotalQuantitySold(),
-                        books.get(i).getTotalRevenue(),
-                        books.get(i).getStockQuantity(),
-                        books.get(i).getIsAvailable()
+                        authors.get(i).getName(),
+                        authors.get(i).getTotalSales(),
+                        authors.get(i).getTotalRevenue(),
+                        authors.get(i).getTotalBooks(),
+                        authors.get(i).getTotalAvailableBooks()
                 );
 
                 if (column == 3) {
@@ -269,8 +293,12 @@ public class AdminPanelController implements Initializable{
             }
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
     }
+
+    public void closeAuthorsList(ActionEvent actionEvent) {
+        authorsScroll.setVisible(false);
+    }
+
+
 }
