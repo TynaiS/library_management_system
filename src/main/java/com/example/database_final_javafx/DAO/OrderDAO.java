@@ -9,6 +9,7 @@ import com.example.database_final_javafx.utils.GenericDao;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +32,24 @@ public class OrderDAO extends GenericDao<Order> {
                         .ownedBooksCount(rs.getInt("owned_books_count"))
                         .bookId(rs.getLong("book_id"))
                         .build());
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public Order findOrderByDateAndUserAndBookIdAndQuantity (LocalDateTime localDateTime, Long userId, Long bookId, int quantity) {
+        Order result = new Order();
+        String sql = "select * from " + getTableName() + " where user_id = ? and book_id = ? and quantity = ? and order_date = ? limit 1";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setLong(1, userId);
+            stmt.setLong(2, bookId);
+            stmt.setInt(3, quantity);
+            stmt.setTimestamp(4,  Timestamp.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant()));
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                result = mapResultSetToEntity(rs);
             }
         } catch (SQLException e) {
             e.printStackTrace();
